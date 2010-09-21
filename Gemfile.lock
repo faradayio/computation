@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    computation (0.0.0)
+    computation (0.0.1)
       emitter (~> 0.1.3)
 
 GEM
