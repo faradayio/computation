@@ -1,4 +1,4 @@
-= computation
+= meeting
 
 Description goes here.
 
@@ -14,4 +14,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Derek Kastner. See LICENSE for details.
+Copyright (c) 2010 Andy Rossmeissl. See LICENSE for details.

@@ -1,4 +1,8 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'computation'
+require 'bundler'
+Bundler.setup
 
-require 'spec/expectations'
+require 'cucumber'
+require 'cucumber/formatter/unicode'
+
+require 'sniff'
+Sniff.init File.join(File.dirname(__FILE__), '..', '..'), :cucumber => true, :earth => []
