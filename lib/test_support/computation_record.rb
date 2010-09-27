@@ -7,8 +7,6 @@ class ComputationRecord < ActiveRecord::Base
   include BrighterPlanet::Computation
   
   belongs_to :zip_code, :foreign_key => 'zip_code_name'
-  belongs_to :egrid_subregion, :foreign_key => 'egrid_subregion_abbreviation'
-  belongs_to :egrid_region, :foreign_key => 'egrid_region_name'
   
   falls_back_on :compute_time => 1.0, # assume 1 hour
                 :compute_units => 1, # assume 1 EC2 Unit
