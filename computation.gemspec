@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-09-21}
+  s.date = %q{2010-09-27}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of a computer's computations}
   s.email = %q{andy@rossmeissl.net}
   s.extra_rdoc_files = [
@@ -24,8 +24,7 @@ Gem::Specification.new do |s|
      "lib/computation/characterization.rb",
      "lib/computation/data.rb",
      "lib/computation/summarization.rb",
-     "lib/test_support/computation_record.rb",
-     "lib/test_support/db/schema.rb"
+     "lib/test_support/computation_record.rb"
   ]
   s.homepage = %q{http://github.com/brighterplanet/computation}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -36,8 +35,7 @@ Gem::Specification.new do |s|
     "features/support/env.rb",
      "features/computation_committees.feature",
      "features/computation_emissions.feature",
-     "lib/test_support/computation_record.rb",
-     "lib/test_support/db/schema.rb"
+     "lib/test_support/computation_record.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -52,7 +50,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
-      s.add_development_dependency(%q<sniff>, ["~> 0.1.12"])
+      s.add_development_dependency(%q<sniff>, ["~> 0.2.0"])
       s.add_runtime_dependency(%q<emitter>, ["~> 0.1.3"])
     else
       s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
@@ -62,7 +60,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
-      s.add_dependency(%q<sniff>, ["~> 0.1.12"])
+      s.add_dependency(%q<sniff>, ["~> 0.2.0"])
       s.add_dependency(%q<emitter>, ["~> 0.1.3"])
     end
   else
@@ -73,7 +71,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.17"])
-    s.add_dependency(%q<sniff>, ["~> 0.1.12"])
+    s.add_dependency(%q<sniff>, ["~> 0.2.0"])
     s.add_dependency(%q<emitter>, ["~> 0.1.3"])
   end
 end
