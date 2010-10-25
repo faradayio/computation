@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", "Derek Kastner"]
-  s.date = %q{2010-10-20}
+  s.date = %q{2010-10-25}
   s.description = %q{A software model in Ruby for the greenhouse gas emissions of a computer's computations}
   s.email = %q{andy@rossmeissl.net}
   s.extra_rdoc_files = [
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<activerecord>, ["~> 3.0.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_development_dependency(%q<cucumber>, ["~> 0.8.3"])
+      s.add_development_dependency(%q<cucumber>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.4.0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<rdoc>, [">= 0"])
@@ -57,7 +57,7 @@ Gem::Specification.new do |s|
     else
       s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-      s.add_dependency(%q<cucumber>, ["~> 0.8.3"])
+      s.add_dependency(%q<cucumber>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<rdoc>, [">= 0"])
@@ -68,7 +68,7 @@ Gem::Specification.new do |s|
   else
     s.add_dependency(%q<activerecord>, ["~> 3.0.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
-    s.add_dependency(%q<cucumber>, ["~> 0.8.3"])
+    s.add_dependency(%q<cucumber>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.4.0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<rdoc>, [">= 0"])
