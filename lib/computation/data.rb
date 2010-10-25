@@ -4,10 +4,10 @@ module BrighterPlanet
       def self.included(base)
         base.data_miner do
           schema do
-            float   'compute_time'
-            integer 'compute_units'
+            float   'duration'
+            integer 'ec2_compute_units'
             string  'zip_code_name'
-            float   'compute_electricity_intensity'
+            float   'electricity_intensity'
             float   'power_usage_effectiveness'
           end
           

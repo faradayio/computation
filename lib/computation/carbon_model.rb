@@ -20,8 +20,8 @@ module BrighterPlanet
           end
           
           committee :electricity_use do # returns kWh including distribution losses
-            quorum 'from compute units, time, electricity intensity, PUE, and eGRID region', :needs => [:compute_units, :compute_time, :compute_electricity_intensity, :power_usage_effectiveness, :egrid_region] do |characteristics|
-              (characteristics[:compute_units] * characteristics[:compute_time] * characteristics[:compute_electricity_intensity] * characteristics[:power_usage_effectiveness]) / (1 - characteristics[:egrid_region].loss_factor)
+            quorum 'from compute units, time, electricity intensity, PUE, and eGRID region', :needs => [:ec2_compute_units, :duration, :electricity_intensity, :power_usage_effectiveness, :egrid_region] do |characteristics|
+              (characteristics[:ec2_compute_units] * characteristics[:duration] * characteristics[:electricity_intensity] * characteristics[:power_usage_effectiveness]) / (1 - characteristics[:egrid_region].loss_factor)
             end
           end
           
@@ -31,9 +31,9 @@ module BrighterPlanet
             end
           end
           
-          committee :compute_electricity_intensity do # returns kW (average load of IT infrastructure)
+          committee :electricity_intensity do # returns kW (average load of IT infrastructure)
             quorum 'default' do
-              base.fallback.compute_electricity_intensity
+              base.fallback.electricity_intensity
             end
           end
           
@@ -53,15 +53,15 @@ module BrighterPlanet
             end
           end
           
-          committee :compute_time do # returns hours
+          committee :duration do # returns hours
             quorum 'default' do
-              base.fallback.compute_time
+              base.fallback.duration
             end
           end
           
-          committee :compute_units do # returns compute units (EC2 instances)
+          committee :ec2_compute_units do # returns compute units (EC2 instances)
             quorum 'default' do
-              base.fallback.compute_units
+              base.fallback.ec2_compute_units
             end
           end
         end
