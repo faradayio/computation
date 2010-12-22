@@ -20,8 +20,14 @@ module BrighterPlanet
           end
           
           committee :electricity_use do # returns kWh including distribution losses
-            quorum 'from compute units, time, electricity intensity, PUE, and eGRID region', :needs => [:ec2_compute_units, :duration, :electricity_intensity, :power_usage_effectiveness, :egrid_region] do |characteristics|
-              (characteristics[:ec2_compute_units] * characteristics[:duration] * characteristics[:electricity_intensity] * characteristics[:power_usage_effectiveness]) / (1 - characteristics[:egrid_region].loss_factor)
+            quorum 'from compute units, time, electricity intensity, PUE, and eGRID region', :needs => [:ec2_compute_units, :duration_in_hours, :electricity_intensity, :power_usage_effectiveness, :egrid_region] do |characteristics|
+              (characteristics[:ec2_compute_units] * characteristics[:duration_in_hours] * characteristics[:electricity_intensity] * characteristics[:power_usage_effectiveness]) / (1 - characteristics[:egrid_region].loss_factor)
+            end
+          end
+
+          committee :duration_in_hours do
+            quorum 'from duration', :needs => :duration do |characteristics|
+              characteristics[:duration] / (60 * 60)
             end
           end
           
@@ -53,7 +59,7 @@ module BrighterPlanet
             end
           end
           
-          committee :duration do # returns hours
+          committee :duration do # returns seconds
             quorum 'default' do
               base.fallback.duration
             end

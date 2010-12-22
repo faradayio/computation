@@ -11,7 +11,7 @@ Feature: Computation Committee Calculations
     Given a computation emitter
     When the "duration" committee is calculated
     Then the committee should have used quorum "default"
-    And the conclusion of the committee should be "1.0"
+    And the conclusion of the committee should be "3600.0"
 
   Scenario: eGRID subregion committee from default
     Given a computation emitter
@@ -53,10 +53,24 @@ Feature: Computation Committee Calculations
     Then the committee should have used quorum "default"
     And the conclusion of the committee should be "1.5"
 
+  Scenario Outline: Duration in hours from duration
+    Given a computation emitter
+    And a characteristic "duration" of "<seconds>"
+    When the "duration_in_hours" committee is calculated
+    Then the committee should have used quorum "from duration"
+    And the conclusion of the committee should be "<hours>"
+    Examples:
+      | seconds | hours |
+      | 0.0     | 0.0   |
+      | 1800.0  | 0.5   |
+      | 3600.0  | 1.0   |
+      | 7200.0  | 2.0   |
+
   Scenario: Electricity use commitee from default EC2 compute units, duration, electricity intensity, zip code, and PUE
     Given a computation emitter
     When the "ec2_compute_units" committee is calculated
     And the "duration" committee is calculated
+    And the "duration_in_hours" committee is calculated
     And the "egrid_subregion" committee is calculated
     And the "egrid_region" committee is calculated
     And the "electricity_intensity" committee is calculated
@@ -68,10 +82,11 @@ Feature: Computation Committee Calculations
   Scenario: Electricity use commitee from EC2 compute units, duration, electricity intensity, zip code, and PUE
     Given a computation emitter
     And a characteristic "ec2_compute_units" of "10"
-    And a characteristic "duration" of "10"
+    And a characteristic "duration" of "36000"
     And a characteristic "zip_code.name" of "94122"
     And a characteristic "electricity_intensity" of "1.0"
     And a characteristic "power_usage_effectiveness" of "2.0"
+    When the "duration_in_hours" committee is calculated
     And the "egrid_subregion" committee is calculated
     And the "egrid_region" committee is calculated
     And the "electricity_use" committee is calculated
