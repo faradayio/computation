@@ -23,31 +23,13 @@ In order to run tests, you must:
   end
 end
 
-require_or_fail('jeweler', 'Jeweler (or a dependency) not available. Install it with: gem install jeweler') do
-  Jeweler::Tasks.new do |gem|
-    gem.name = "computation"
-    gem.summary = %Q{A carbon model}
-    gem.description = %Q{A software model in Ruby for the greenhouse gas emissions of a computer's computations}
-    gem.email = "andy@rossmeissl.net"
-    gem.homepage = "http://github.com/brighterplanet/computation"
-    gem.authors = ["Andy Rossmeissl", "Seamus Abshere", "Ian Hough", "Matt Kling", 'Derek Kastner']
-    gem.files = ['LICENSE', 'README.rdoc'] + 
-      Dir.glob(File.join('lib', '**','*.rb'))
-    gem.test_files = Dir.glob(File.join('features', '**', '*.rb')) +
-      Dir.glob(File.join('features', '**', '*.feature')) +
-      Dir.glob(File.join('lib', 'test_support', '**/*.rb'))
-    gem.add_development_dependency 'bundler', '~>1.0.0'
-    gem.add_development_dependency 'sniff', '~> 0.4.9' unless ENV['LOCAL_SNIFF']
-    gem.add_dependency 'emitter', '~>0.3' unless ENV['LOCAL_EMITTER']
-  end
-  Jeweler::GemcutterTasks.new
+require_or_fail('bueller', 'Bueller (or a dependency) not available. Install it with: gem install bueller') do
+  Bueller::Tasks.new
 end
 
 require_or_fail('sniff', 'Sniff gem not found, sniff tasks unavailable') do
-  require 'sniff/rake_task'
-  Sniff::RakeTask.new(:console) do |t|
-#    t.earth_domains = :something
-  end
+  require 'sniff/rake_tasks'
+  Sniff::RakeTasks.new
 end
 
 require_or_fail('cucumber', 'Cucumber gem not found, cucumber tasks unavailable') do
