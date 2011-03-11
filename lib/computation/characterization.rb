@@ -6,7 +6,9 @@ module BrighterPlanet
       def self.included(base)
         base.characterize do
           has :duration
-          has :ec2_compute_units
+          has :carrier
+          has :carrier_region
+          has :carrier_instance_class
           has :zip_code
           has :electricity_intensity
           has :power_usage_effectiveness

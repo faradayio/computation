@@ -1,23 +1,64 @@
 Feature: Computation Committee Calculations
   The computation model should generate correct committee calculations
 
-  Scenario: EC2 compute units committee from default
-    Given a computation emitter
-    When the "ec2_compute_units" committee is calculated
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should be "1"
-
   Scenario: Duration commitee from default
     Given a computation emitter
     When the "duration" committee is calculated
     Then the committee should have used quorum "default"
     And the conclusion of the committee should be "3600.0"
 
+  Scenario: Carrier committee from default
+    Given a computation emitter
+    When the "carrier" committee is calculated
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "name" of "fallback"
+
+  Scenario: Carrier instance class committee from default
+    Given a computation emitter
+    When the "carrier_instance_class" committee is calculated
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "name" of "fallback"
+
+  Scenario: Electricity intensity committee from default carrier instance class
+    Given a computation emitter
+    When the "carrier_instance_class" committee is calculated
+    And the "electricity_intensity" committee is calculated
+    Then the committee should have used quorum "from carrier instance class"
+    And the conclusion of the committee should be "0.1"
+
+  Scenario: Electricity intensity committee from carrier instance class
+    Given a computation emitter
+    And a characteristic "carrier_instance_class.name" of "Amazon m1.large"
+    When the "electricity_intensity" committee is calculated
+    Then the committee should have used quorum "from carrier instance class"
+    And the conclusion of the committee should be "0.4"
+
+  Scenario: Power usage effectiveness committee from default carrier
+    Given a computation emitter
+    When the "carrier" committee is calculated
+    And the "power_usage_effectiveness" committee is calculated
+    Then the committee should have used quorum "from carrier"
+    And the conclusion of the committee should be "1.5"
+
+  Scenario: Power usage effectiveness committee from carrier
+    Given a computation emitter
+    And a characteristic "carrier.name" of "Amazon"
+    When the "power_usage_effectiveness" committee is calculated
+    Then the committee should have used quorum "from carrier"
+    And the conclusion of the committee should be "1.5"
+
   Scenario: eGRID subregion committee from default
     Given a computation emitter
     When the "egrid_subregion" committee is calculated
     Then the committee should have used quorum "default"
-    And the conclusion of the committee should have "abbreviation" of "US"
+    And the conclusion of the committee should have "name" of "fallback"
+
+  Scenario: eGRID subregion commitee from carrier region
+    Given a computation emitter
+    And a characteristic "carrier_region.name" of "Amazon us-east-1a"
+    When the "egrid_subregion" committee is calculated
+    Then the committee should have used quorum "from carrier region"
+    And the conclusion of the committee should have "abbreviation" of "SRVC"
 
   Scenario: eGRID subregion commitee from zip code
     Given a computation emitter
@@ -31,79 +72,183 @@ Feature: Computation Committee Calculations
     When the "egrid_subregion" committee is calculated
     And the "egrid_region" committee is calculated
     Then the committee should have used quorum "from eGRID subregion"
-    And the conclusion of the committee should have "name" of "US"
+    And the conclusion of the committee should have "name" of "fallback"
 
-  Scenario: eGRID region committe from zip code
+  Scenario Outline: eGRID region committee eGRID subregion
     Given a computation emitter
-    And a characteristic "zip_code.name" of "94122"
+    And a characteristic "egrid_subregion.abbreviation" of "<subregion>"
+    When the "egrid_region" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should have "name" of "<name>"
+    Examples:
+      | subregion | name |
+      | SRVC      | E    |
+      | CAMX      | W    |
+
+  Scenario: Electricity loss factor committee from default eGRID region
+    Given a computation emitter
     When the "egrid_subregion" committee is calculated
     And the "egrid_region" committee is calculated
-    Then the committee should have used quorum "from eGRID subregion"
-    And the conclusion of the committee should have "name" of "W"
+    And the "electricity_loss_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID region"
+    And the conclusion of the committee should be "0.06188"
 
-  Scenario: Electricity intensity commtitee from default
+  Scenario Outline: Electricity loss factor committee eGRID region
     Given a computation emitter
-    When the "electricity_intensity" committee is calculated
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should be "0.075"
-
-  Scenario: Power usage effectiveness commtitee from default
-    Given a computation emitter
-    When the "power_usage_effectiveness" committee is calculated
-    Then the committee should have used quorum "default"
-    And the conclusion of the committee should be "1.5"
-
-  Scenario Outline: Duration in hours from duration
-    Given a computation emitter
-    And a characteristic "duration" of "<seconds>"
-    When the "duration_in_hours" committee is calculated
-    Then the committee should have used quorum "from duration"
-    And the conclusion of the committee should be "<hours>"
+    And a characteristic "egrid_region.name" of "<name>"
+    When the "electricity_loss_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID region"
+    And the conclusion of the committee should be "<loss_factor>"
     Examples:
-      | seconds | hours |
-      | 0.0     | 0.0   |
-      | 1800.0  | 0.5   |
-      | 3600.0  | 1.0   |
-      | 7200.0  | 2.0   |
+      | name | loss_factor |
+      | E    | 0.06        |
+      | W    | 0.05        |
 
-  Scenario: Electricity use commitee from default EC2 compute units, duration, electricity intensity, zip code, and PUE
+  Scenario: Electricity use commitee from defaults
     Given a computation emitter
-    When the "ec2_compute_units" committee is calculated
-    And the "duration" committee is calculated
-    And the "duration_in_hours" committee is calculated
-    And the "egrid_subregion" committee is calculated
-    And the "egrid_region" committee is calculated
+    When the "duration" committee is calculated
+    And the "carrier" committee is calculated
+    And the "carrier_instance_class" committee is calculated
     And the "electricity_intensity" committee is calculated
     And the "power_usage_effectiveness" committee is calculated
-    And the "electricity_use" committee is calculated
-    Then the committee should have used quorum "from compute units, time, electricity intensity, PUE, and eGRID region"
-    And the conclusion of the committee should be "0.14063"
-
-  Scenario: Electricity use commitee from EC2 compute units, duration, electricity intensity, zip code, and PUE
-    Given a computation emitter
-    And a characteristic "ec2_compute_units" of "10"
-    And a characteristic "duration" of "36000"
-    And a characteristic "zip_code.name" of "94122"
-    And a characteristic "electricity_intensity" of "1.0"
-    And a characteristic "power_usage_effectiveness" of "2.0"
-    When the "duration_in_hours" committee is calculated
     And the "egrid_subregion" committee is calculated
     And the "egrid_region" committee is calculated
+    And the "electricity_loss_factor" committee is calculated
     And the "electricity_use" committee is calculated
-    Then the committee should have used quorum "from compute units, time, electricity intensity, PUE, and eGRID region"
-    And the conclusion of the committee should be "222.22222"
+    Then the committee should have used quorum "from duration, electricity intensity, PUE, and electricity loss factor"
+    And the conclusion of the committee should be "0.15989"
 
-  Scenario: Emission factor committee from default eGRID subregion
+  Scenario: Electricity use commitee from carrier, carrier instance class, and carrier region
     Given a computation emitter
-    When the "egrid_subregion" committee is calculated
-    And the "emission_factor" committee is calculated
-    Then the committee should have used quorum "from eGRID subregion"
-    And the conclusion of the committee should be "2.0"
+    And a characteristic "carrier.name" of "Amazon"
+    And a characteristic "carrier_instance_class.name" of "Amazon m1.large"
+    And a characteristic "carrier_region.name" of "Amazon us-east-1a"
+    When the "duration" committee is calculated
+    And the "electricity_intensity" committee is calculated
+    And the "power_usage_effectiveness" committee is calculated
+    And the "egrid_subregion" committee is calculated
+    And the "egrid_region" committee is calculated
+    And the "electricity_loss_factor" committee is calculated
+    And the "electricity_use" committee is calculated
+    Then the committee should have used quorum "from duration, electricity intensity, PUE, and electricity loss factor"
+    And the conclusion of the committee should be "0.63830"
 
-  Scenario: Emission factor committee from zip code
+  Scenario: Electricity use commitee from carrier, carrier instance class, carrier region, and zip code
     Given a computation emitter
+    And a characteristic "carrier.name" of "Amazon"
+    And a characteristic "carrier_instance_class.name" of "Amazon m1.large"
+    And a characteristic "carrier_region.name" of "Amazon us-east-1a"
     And a characteristic "zip_code.name" of "94122"
+    When the "duration" committee is calculated
+    And the "electricity_intensity" committee is calculated
+    And the "power_usage_effectiveness" committee is calculated
+    And the "egrid_subregion" committee is calculated
+    And the "egrid_region" committee is calculated
+    And the "electricity_loss_factor" committee is calculated
+    And the "electricity_use" committee is calculated
+    Then the committee should have used quorum "from duration, electricity intensity, PUE, and electricity loss factor"
+    And the conclusion of the committee should be "0.63158"
+
+  Scenario: CO2 emission factor from default
+    Given a computation emitter
     When the "egrid_subregion" committee is calculated
-    And the "emission_factor" committee is calculated
+    And the "co2_emission_factor" committee is calculated
     Then the committee should have used quorum "from eGRID subregion"
-    And the conclusion of the committee should be "1.0"
+    And the conclusion of the committee should be "0.41751"
+
+  Scenario Outline: CO2 emission factor from egrid subregion
+    Given a computation emitter
+    And a characteristic "egrid_subregion.abbreviation" of "<subregion>"
+    When the "co2_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "<ef>"
+    Examples:
+      | subregion | ef  |
+      | SRVC      | 0.5 |
+      | CAMX      | 0.3 |
+
+  Scenario: CO2 biogenic emission factor from default
+    Given a computation emitter
+    When the "egrid_subregion" committee is calculated
+    And the "co2_biogenic_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "0.0"
+
+  Scenario Outline: CO2 biogenic emission factor from egrid subregion
+    Given a computation emitter
+    And a characteristic "egrid_subregion.abbreviation" of "<subregion>"
+    When the "co2_biogenic_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "<ef>"
+    Examples:
+      | subregion | ef  |
+      | SRVC      | 0.0 |
+      | CAMX      | 0.0 |
+
+  Scenario: CH4 emission factor from default
+    Given a computation emitter
+    When the "egrid_subregion" committee is calculated
+    And the "ch4_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "0.00030"
+
+  Scenario Outline: CH4 emission factor from egrid subregion
+    Given a computation emitter
+    And a characteristic "egrid_subregion.abbreviation" of "<subregion>"
+    When the "ch4_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "<ef>"
+    Examples:
+      | subregion | ef     |
+      | SRVC      | 0.0003 |
+      | CAMX      | 0.0003 |
+
+  Scenario: N2O emission factor from default
+    Given a computation emitter
+    When the "egrid_subregion" committee is calculated
+    And the "n2o_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "0.00218"
+
+  Scenario Outline: N2O emission factor from egrid subregion
+    Given a computation emitter
+    And a characteristic "egrid_subregion.abbreviation" of "<subregion>"
+    When the "n2o_emission_factor" committee is calculated
+    Then the committee should have used quorum "from eGRID subregion"
+    And the conclusion of the committee should be "<ef>"
+    Examples:
+      | subregion | ef    |
+      | SRVC      | 0.003 |
+      | CAMX      | 0.001 |
+
+  Scenario: CO2 emission from electricity use and co2 emission factor
+    Given a computation emitter
+    And a characteristic "electricity_use" of "10.0"
+    And a characteristic "co2_emission_factor" of "2.0"
+    When the "co2_emission" committee is calculated
+    Then the committee should have used quorum "from electricity use and co2 emission factor"
+    And the conclusion of the committee should be "20.0"
+
+  Scenario: CO2 biogenic emission from electricity use and co2 biogenic emission factor
+    Given a computation emitter
+    And a characteristic "electricity_use" of "10.0"
+    And a characteristic "co2_biogenic_emission_factor" of "2.0"
+    When the "co2_biogenic_emission" committee is calculated
+    Then the committee should have used quorum "from electricity use and co2 biogenic emission factor"
+    And the conclusion of the committee should be "20.0"
+
+  Scenario: CH4 emission from electricity use and ch4 emission factor
+    Given a computation emitter
+    And a characteristic "electricity_use" of "10.0"
+    And a characteristic "ch4_emission_factor" of "2.0"
+    When the "ch4_emission" committee is calculated
+    Then the committee should have used quorum "from electricity use and ch4 emission factor"
+    And the conclusion of the committee should be "20.0"
+
+  Scenario: N2O emission from electricity use and n2o emission factor
+    Given a computation emitter
+    And a characteristic "electricity_use" of "10.0"
+    And a characteristic "n2o_emission_factor" of "2.0"
+    When the "n2o_emission" committee is calculated
+    Then the committee should have used quorum "from electricity use and n2o emission factor"
+    And the conclusion of the committee should be "20.0"

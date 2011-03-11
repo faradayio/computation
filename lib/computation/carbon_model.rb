@@ -3,43 +3,69 @@ module BrighterPlanet
     module CarbonModel
       def self.included(base)
         base.decide :emission, :with => :characteristics do
-          committee :emission do # returns kg CO2e
-            quorum 'from electricity use and emission factor', :needs => [:electricity_use, :emission_factor] do |characteristics|
-              characteristics[:electricity_use] * characteristics[:emission_factor]
-            end
-            
-            quorum 'default' do
-              raise "The emission committee's default quorum should never be called."
+          committee :emission do # returns kg co2e
+            quorum 'from co2 emission, ch4 emission, and n2o emission', :needs => [:co2_emission, :ch4_emission, :n2o_emission] do |characteristics|
+              characteristics[:co2_emission] + characteristics[:ch4_emission] + characteristics[:n2o_emission]
             end
           end
           
-          committee :emission_factor do # returns kg co2e / kWh
+          committee :co2_emission do # returns kg
+            quorum 'from electricity use and co2 emission factor', :needs => [:electricity_use, :co2_emission_factor] do |characteristics|
+              characteristics[:electricity_use] * characteristics[:co2_emission_factor]
+            end
+          end
+          
+          committee :co2_biogenic_emission do # returns kg
+            quorum 'from electricity use and co2 biogenic emission factor', :needs => [:electricity_use, :co2_biogenic_emission_factor] do |characteristics|
+              characteristics[:electricity_use] * characteristics[:co2_biogenic_emission_factor]
+            end
+          end
+          
+          committee :ch4_emission do # returns kg co2e
+            quorum 'from electricity use and ch4 emission factor', :needs => [:electricity_use, :ch4_emission_factor] do |characteristics|
+              characteristics[:electricity_use] * characteristics[:ch4_emission_factor]
+            end
+          end
+          
+          committee :n2o_emission do # returns kg co2e
+            quorum 'from electricity use and n2o emission factor', :needs => [:electricity_use, :n2o_emission_factor] do |characteristics|
+              characteristics[:electricity_use] * characteristics[:n2o_emission_factor]
+            end
+          end
+          
+          committee :co2_emission_factor do # returns kg / kWh
             quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
-              characteristics[:egrid_subregion].electricity_emission_factor
+              characteristics[:egrid_subregion].electricity_co2_emission_factor
+            end
+          end
+          
+          committee :co2_biogenic_emission_factor do # returns kg / kWh
+            quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
+              characteristics[:egrid_subregion].electricity_co2_biogenic_emission_factor
+            end
+          end
+          
+          committee :ch4_emission_factor do # returns kg co2e / kWh
+            quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
+              characteristics[:egrid_subregion].electricity_ch4_emission_factor
+            end
+          end
+          
+          committee :n2o_emission_factor do # returns kg co2e / kWh
+            quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
+              characteristics[:egrid_subregion].electricity_n2o_emission_factor
             end
           end
           
           committee :electricity_use do # returns kWh including distribution losses
-            quorum 'from compute units, time, electricity intensity, PUE, and eGRID region', :needs => [:ec2_compute_units, :duration_in_hours, :electricity_intensity, :power_usage_effectiveness, :egrid_region] do |characteristics|
-              (characteristics[:ec2_compute_units] * characteristics[:duration_in_hours] * characteristics[:electricity_intensity] * characteristics[:power_usage_effectiveness]) / (1 - characteristics[:egrid_region].loss_factor)
-            end
-          end
-
-          committee :duration_in_hours do
-            quorum 'from duration', :needs => :duration do |characteristics|
-              characteristics[:duration] / (60 * 60)
+            quorum 'from duration, electricity intensity, PUE, and electricity loss factor', :needs => [:duration, :electricity_intensity, :power_usage_effectiveness, :electricity_loss_factor] do |characteristics|
+              (characteristics[:duration] / 3600.0 * characteristics[:electricity_intensity] * characteristics[:power_usage_effectiveness]) / (1 - characteristics[:electricity_loss_factor])
             end
           end
           
-          committee :power_usage_effectiveness do # returns data center total energy use / IT energy use
-            quorum 'default' do
-              base.fallback.power_usage_effectiveness
-            end
-          end
-          
-          committee :electricity_intensity do # returns kW (average load of IT infrastructure)
-            quorum 'default' do
-              base.fallback.electricity_intensity
+          committee :electricity_loss_factor do # returns electricity transmission and distribution loss factor
+            quorum 'from eGRID region', :needs => :egrid_region do |characteristics|
+              characteristics[:egrid_region].loss_factor
             end
           end
           
@@ -54,20 +80,42 @@ module BrighterPlanet
               characteristics[:zip_code].egrid_subregion
             end
             
+            quorum 'from carrier region', :needs => :carrier_region do |characteristics|
+              characteristics[:carrier_region].egrid_subregion
+            end
+            
             quorum 'default' do
-              EgridSubregion.find_by_abbreviation 'US'
+              EgridSubregion.fallback
+            end
+          end
+          
+          committee :power_usage_effectiveness do # returns data center total energy use / IT energy use
+            quorum 'from carrier', :needs => :carrier do |characteristics|
+              characteristics[:carrier].power_usage_effectiveness
+            end
+          end
+          
+          committee :electricity_intensity do # returns kW (average load of IT infrastructure)
+            quorum 'from carrier instance class', :needs => :carrier_instance_class do |characteristics|
+              characteristics[:carrier_instance_class].electricity_intensity
+            end
+          end
+          
+          committee :carrier_instance_class do # returns the instance class e.g. m1.small
+            quorum 'default' do
+              ComputationCarrierInstanceClass.fallback
+            end
+          end
+          
+          committee :carrier do # returns the carrier e.g. Amazon
+            quorum 'default' do
+              ComputationCarrier.fallback
             end
           end
           
           committee :duration do # returns seconds
             quorum 'default' do
               base.fallback.duration
-            end
-          end
-          
-          committee :ec2_compute_units do # returns compute units (EC2 instances)
-            quorum 'default' do
-              base.fallback.ec2_compute_units
             end
           end
         end

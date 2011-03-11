@@ -5,7 +5,9 @@ module BrighterPlanet
         base.data_miner do
           schema do
             float   'duration'
-            integer 'ec2_compute_units'
+            string  'computation_carrier_name'
+            string  'computation_carrier_region_name'
+            string  'computation_carrier_instance_class_name'
             string  'zip_code_name'
             float   'electricity_intensity'
             float   'power_usage_effectiveness'

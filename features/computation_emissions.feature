@@ -4,38 +4,61 @@ Feature: Computation Emissions Calculations
   Scenario: Calculations starting from nothing
     Given a computation has nothing
     When emissions are calculated
-    Then the emission value should be within "0.01" kgs of "0.28"
-
-  Scenario: Calculations starting from EC2 compute units
-    Given a computation has "ec2_compute_units" of "10"
-    When emissions are calculated
-    Then the emission value should be within "0.01" kgs of "2.81"
+    Then the emission value should be within "0.01" kgs of "0.07"
 
   Scenario: Calculations starting from duration
     Given a computation has "duration" of "36000"
     When emissions are calculated
-    Then the emission value should be within "0.01" kgs of "2.81"
+    Then the emission value should be within "0.01" kgs of "0.67"
+
+  Scenario: Calculations starting from carrier instance class
+    Given a computation has "carrier_instance_class.name" of "Amazon m1.large"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "0.27"
+
+  Scenario: Calculations starting from carrier
+    Given a computation has "carrier.name" of "Amazon"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "0.07"
+
+  Scenario: Calculations starting from carrier
+    Given a computation has "carrier_region.name" of "Amazon us-east-1a"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "0.08"
 
   Scenario: Calculations starting from zip code
     Given a computation has "zip_code.name" of "94122"
     When emissions are calculated
-    Then the emission value should be within "0.01" kgs of "0.13"
+    Then the emission value should be within "0.01" kgs of "0.05"
 
-  Scenario: Calculations starting from electricity intensity
-    Given a computation has "electricity_intensity" of "1.0"
-    When emissions are calculated
-    Then the emission value should be within "0.01" kgs of "3.75"
-
-    Scenario: Calculations starting from power usage effectiveness
-      Given a computation has "power_usage_effectiveness" of "2.0"
-      When emissions are calculated
-      Then the emission value should be within "0.01" kgs of "0.38"
-
-  Scenario: Calculations starting from EC2 compute units, duration, electricity intensity, zip code, and PUE
-    Given a computation has "ec2_compute_units" of "10"
-    And it has "duration" of "36000"
-    And it has "zip_code.name" of "94122"
-    And it has "electricity_intensity" of "1.0"
+  Scenario: Calculations starting from electricity intensity and power usage effectiveness
+    Given a computation has "electricity_intensity" of "0.5"
     And it has "power_usage_effectiveness" of "2.0"
     When emissions are calculated
-    Then the emission value should be within "0.01" kgs of "222.22"
+    Then the emission value should be within "0.01" kgs of "0.45"
+
+  Scenario: Calculations starting from carrier, carrier region, and carrier instance class
+    Given a computation has "carrier.name" of "Amazon"
+    And it has "carrier_region.name" of "Amazon us-east-1a"
+    And it has "carrier_instance_class.name" of "Amazon m1.large"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "0.32"
+
+  Scenario: Calculations starting from carrier, carrier region, zip code, and carrier instance class
+    Given a computation has "carrier.name" of "Amazon"
+    And it has "carrier_region.name" of "Amazon us-east-1a"
+    And it has "carrier_region.name" of "Amazon us-east-1a"
+    And it has "zip_code.name" of "94122"
+    And it has "carrier_instance_class.name" of "Amazon m1.large"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "0.19"
+
+  Scenario: Calculations starting from duration, carrier, carrier region, zip code, and carrier instance class
+    Given a computation has "duration" of "36000"
+    And it has "carrier.name" of "Amazon"
+    And it has "carrier_region.name" of "Amazon us-east-1a"
+    And it has "carrier_region.name" of "Amazon us-east-1a"
+    And it has "zip_code.name" of "94122"
+    And it has "carrier_instance_class.name" of "Amazon m1.large"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "1.90"

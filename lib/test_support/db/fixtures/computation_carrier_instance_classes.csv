@@ -1,0 +1,3 @@
+name,computation_carrier_name,instance_class,electricity_intensity,electricity_intensity_units
+Amazon m1.small,Amazon,m1.small,0.1,kilowatts
+Amazon m1.large,Amazon,m1.large,0.4,kilowatts
