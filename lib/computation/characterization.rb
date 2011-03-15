@@ -5,6 +5,7 @@ module BrighterPlanet
     module Characterization
       def self.included(base)
         base.characterize do
+          has :date
           has :duration
           has :carrier
           has :carrier_region

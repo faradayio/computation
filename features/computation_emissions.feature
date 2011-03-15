@@ -6,6 +6,28 @@ Feature: Computation Emissions Calculations
     When emissions are calculated
     Then the emission value should be within "0.01" kgs of "0.07"
 
+  Scenario Outline: Calculations from date
+    Given a computation has "date" of "<date>"
+    And it is the year "2010"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "<emission>"
+    Examples:
+      | date       | emission |
+      | 2009-06-25 | 0.0      |
+      | 2010-06-25 | 0.07     |
+      | 2011-06-25 | 0.0      |
+
+  Scenario Outline: Calculations from date and timeframe
+    Given a computation has "date" of "<date>"
+    And it has "timeframe" of "<timeframe>"
+    When emissions are calculated
+    Then the emission value should be within "0.01" kgs of "<emission>"
+    Examples:
+      | date       | timeframe             | emission |
+      | 2009-06-25 | 2009-01-01/2009-01-31 | 0.0      |
+      | 2009-06-25 | 2009-01-01/2009-12-31 | 0.07     |
+      | 2009-06-25 | 2009-12-01/2009-12-31 | 0.0      |
+
   Scenario: Calculations starting from duration
     Given a computation has "duration" of "36000"
     When emissions are calculated

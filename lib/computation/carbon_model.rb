@@ -10,26 +10,42 @@ module BrighterPlanet
           end
           
           committee :co2_emission do # returns kg
-            quorum 'from electricity use and co2 emission factor', :needs => [:electricity_use, :co2_emission_factor] do |characteristics|
-              characteristics[:electricity_use] * characteristics[:co2_emission_factor]
+            quorum 'from electricity use, co2 emission factor, date, and timeframe', :needs => [:electricity_use, :co2_emission_factor, :date] do |characteristics, timeframe|
+              if timeframe.include? Date.parse(characteristics[:date].to_s)
+                characteristics[:electricity_use] * characteristics[:co2_emission_factor]
+              else
+                0
+              end
             end
           end
           
           committee :co2_biogenic_emission do # returns kg
-            quorum 'from electricity use and co2 biogenic emission factor', :needs => [:electricity_use, :co2_biogenic_emission_factor] do |characteristics|
-              characteristics[:electricity_use] * characteristics[:co2_biogenic_emission_factor]
+            quorum 'from electricity use, co2 biogenic emission factor, date, and timeframe', :needs => [:electricity_use, :co2_biogenic_emission_factor, :date] do |characteristics, timeframe|
+              if timeframe.include? Date.parse(characteristics[:date].to_s)
+                characteristics[:electricity_use] * characteristics[:co2_biogenic_emission_factor]
+              else
+                0
+              end
             end
           end
           
           committee :ch4_emission do # returns kg co2e
-            quorum 'from electricity use and ch4 emission factor', :needs => [:electricity_use, :ch4_emission_factor] do |characteristics|
-              characteristics[:electricity_use] * characteristics[:ch4_emission_factor]
+            quorum 'from electricity use, ch4 emission factor, date, and timeframe', :needs => [:electricity_use, :ch4_emission_factor, :date] do |characteristics, timeframe|
+              if timeframe.include? Date.parse(characteristics[:date].to_s)
+                characteristics[:electricity_use] * characteristics[:ch4_emission_factor]
+              else
+                0
+              end
             end
           end
           
           committee :n2o_emission do # returns kg co2e
-            quorum 'from electricity use and n2o emission factor', :needs => [:electricity_use, :n2o_emission_factor] do |characteristics|
-              characteristics[:electricity_use] * characteristics[:n2o_emission_factor]
+            quorum 'from electricity use, n2o emission factor, date, and timeframe', :needs => [:electricity_use, :n2o_emission_factor, :date] do |characteristics, timeframe|
+              if timeframe.include? Date.parse(characteristics[:date].to_s)
+                characteristics[:electricity_use] * characteristics[:n2o_emission_factor]
+              else
+                0
+              end
             end
           end
           
