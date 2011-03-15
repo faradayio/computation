@@ -75,12 +75,12 @@ Contact Brighter Planet for dual-license arrangements.</p>
         <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:emission</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-Emission_from_CO&lt;sub&gt;2&lt;/sub&gt;_emission,_CH&lt;sub&gt;h&lt;/sub&gt;_emission,_and_N&lt;sub&gt;2&lt;/sub&gt;O_emission'>
+    <tr id='section-Emission_from_CO&lt;sub&gt;2&lt;/sub&gt;_emission,_CH&lt;sub&gt;4&lt;/sub&gt;_emission,_and_N&lt;sub&gt;2&lt;/sub&gt;O_emission'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-Emission_from_CO&lt;sub&gt;2&lt;/sub&gt;_emission,_CH&lt;sub&gt;h&lt;/sub&gt;_emission,_and_N&lt;sub&gt;2&lt;/sub&gt;O_emission">&#182;</a>
+          <a class="pilcrow" href="#section-Emission_from_CO&lt;sub&gt;2&lt;/sub&gt;_emission,_CH&lt;sub&gt;4&lt;/sub&gt;_emission,_and_N&lt;sub&gt;2&lt;/sub&gt;O_emission">&#182;</a>
         </div>
-        <h3>Emission from CO<sub>2</sub> emission, CH<sub>h</sub> emission, and N<sub>2</sub>O emission</h3>
+        <h3>Emission from CO<sub>2</sub> emission, CH<sub>4</sub> emission, and N<sub>2</sub>O emission</h3>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from co2 emission, ch4 emission, and n2o emission&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:co2_emission</span><span class="p">,</span> <span class="ss">:ch4_emission</span><span class="p">,</span> <span class="ss">:n2o_emission</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
@@ -605,7 +605,7 @@ Contact Brighter Planet for dual-license arrangements.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-46">&#182;</a>
         </div>
-        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID region</a> <code>eGRID region</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>eGRID region</code>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_subregion</span><span class="o">].</span><span class="n">egrid_region</span>
@@ -768,7 +768,7 @@ Contact Brighter Planet for dual-license arrangements.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-59">&#182;</a>
         </div>
-        <p>Looks up the <a href="http://data.brighterplanet.com/carriers">carrier</a> <code>power usage effectiveness</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/computation_carriers">carrier</a> <code>power usage effectiveness</code>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:carrier</span><span class="o">].</span><span class="n">power_usage_effectiveness</span>
@@ -819,7 +819,7 @@ Contact Brighter Planet for dual-license arrangements.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-63">&#182;</a>
         </div>
-        <p>Looks up the <a href="http://data.brighterplanet.com/carrier_instance_classes">carrier instance class</a> <code>electricity intensity</code> (<em>kW</em>).</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/computation_carrier_instance_classes">carrier instance class</a> <code>electricity intensity</code> (<em>kW</em>).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:carrier_instance_class</span><span class="o">].</span><span class="n">electricity_intensity</span>
@@ -870,7 +870,7 @@ Contact Brighter Planet for dual-license arrangements.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-67">&#182;</a>
         </div>
-        <p>Assumes <a href="http://data.brighterplanet.com/computation_instance_classes">Amazon m1.small</a>.</p>
+        <p>Assumes <a href="http://data.brighterplanet.com/computation_carrier_instance_classes">Amazon m1.small</a>.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>              <span class="no">ComputationCarrierInstanceClass</span><span class="o">.</span><span class="n">fallback</span>
