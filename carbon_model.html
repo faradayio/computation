@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>carbon_model.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <link rel="stylesheet" href="http://github.com/jashkenas/docco/raw/0.3.0/resources/docco.css">
 </head>
 <body>
 <div id='container'>
@@ -18,990 +18,1067 @@
   <tbody>
     <tr id='section-1'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-1">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
-        <p> Copyright © 2010 Brighter Planet.
- See LICENSE for details.
- Contact Brighter Planet for dual-license arrangements.</p>
+        <p>Copyright © 2010 Brighter Planet.
+See LICENSE for details.
+Contact Brighter Planet for dual-license arrangements.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
       </td>
     </tr>
-    <tr id='section-2'>
+    <tr id='section-Computation_carbon_model'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-2">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Computation_carbon_model">&#182;</a>
         </div>
         <h1>Computation carbon model</h1>
 
-<p> This model is used by <a href="http://brighterplanet.com">Brighter Planet</a>&rsquo;s carbon emission <a href="http://carbon.brighterplanet.com">web service</a> to estimate the <strong>greenhouse gas emissions of server use</strong>.</p>
+<p>This model is used by <a href="http://brighterplanet.com">Brighter Planet</a>&rsquo;s carbon emission <a href="http://carbon.brighterplanet.com">web service</a> to estimate the <strong>greenhouse gas emissions of server use</strong>.</p>
 
 <h4>Timeframe and activity period</h4>
 
-<p> The model estimates the emissions that occur during a particular <code>timeframe</code>. To do this it needs to know the <code>date</code> on which the computations occurred. For example, if the <code>timeframe</code> is January 2010, a computation that occurred on January 5, 2010 will have emissions but a computation that occurred on February 1, 2010 will not.</p>
+<p>The model estimates the emissions that occur during a particular <code>timeframe</code>. To do this it needs to know the <code>date</code> on which the computations occurred. For example, if the <code>timeframe</code> is January 2010, a computation that occurred on January 5, 2010 will have emissions but a computation that occurred on February 1, 2010 will not.</p>
 
 <h4>Calculations</h4>
 
-<p> The final estimate is the result of the <strong>calculations</strong> detailed below. These calculations are performed in reverse order, starting with the last calculation listed and finishing with the <code>emission</code> calculation. Each calculation is named according to the value it returns.</p>
+<p>The final estimate is the result of the <strong>calculations</strong> detailed below. These calculations are performed in reverse order, starting with the last calculation listed and finishing with the <code>emission</code> calculation. Each calculation is named according to the value it returns.</p>
 
 <h4>Methods</h4>
 
-<p> To accomodate varying client input, each calculation may have one or more <strong>methods</strong>. These are listed under each calculation in order from most to least preferred. Each method is named according to the values it requires. If any of these values is not available the method will be ignored. If all the methods for a calculation are ignored, the calculation will not return a value. &ldquo;Default&rdquo; methods do not require any values, and so a calculation with a default method will always return a value.</p>
+<p>To accomodate varying client input, each calculation may have one or more <strong>methods</strong>. These are listed under each calculation in order from most to least preferred. Each method is named according to the values it requires. If any of these values is not available the method will be ignored. If all the methods for a calculation are ignored, the calculation will not return a value. &ldquo;Default&rdquo; methods do not require any values, and so a calculation with a default method will always return a value.</p>
 
 <h4>Collaboration</h4>
 
-<p> Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="http://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
+<p>Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="http://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre><span class="k">module</span> <span class="nn">BrighterPlanet</span>
+  <span class="k">module</span> <span class="nn">Computation</span>
+    <span class="k">module</span> <span class="nn">CarbonModel</span>
+      <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+        <span class="n">base</span><span class="o">.</span><span class="n">decide</span> <span class="ss">:emission</span><span class="p">,</span> <span class="ss">:with</span> <span class="o">=&gt;</span> <span class="ss">:characteristics</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-3'>
+    <tr id='section-Emission_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-3">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Emission_calculation">&#182;</a>
         </div>
         <h2>Emission calculation</h2>
 
-<p> Returns the <code>emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
+<p>Returns the <code>emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:emission</span> <span class="k">do</span> <span class="c1"># returns kg co2e</span></pre></div>
       </td>
     </tr>
-    <tr id='section-4'>
+    <tr id='section-Emission_from_CO&lt;sub&gt;2&lt;/sub&gt;_emission,_CH&lt;sub&gt;h&lt;/sub&gt;_emission,_and_N&lt;sub&gt;2&lt;/sub&gt;O_emission'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-4">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Emission_from_CO&lt;sub&gt;2&lt;/sub&gt;_emission,_CH&lt;sub&gt;h&lt;/sub&gt;_emission,_and_N&lt;sub&gt;2&lt;/sub&gt;O_emission">&#182;</a>
         </div>
         <h3>Emission from CO<sub>2</sub> emission, CH<sub>h</sub> emission, and N<sub>2</sub>O emission</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from co2 emission, ch4 emission, and n2o emission&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:co2_emission</span><span class="p">,</span> <span class="ss">:ch4_emission</span><span class="p">,</span> <span class="ss">:n2o_emission</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-5">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
         </div>
-        <p> Adds <code>co2 emission</code> (<em>kg</em>), <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>), and <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>) to give (<em>kg CO<sub>2</sub>e</em>).</p>
+        <p>Adds <code>co2 emission</code> (<em>kg</em>), <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>), and <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>) to give (<em>kg CO<sub>2</sub>e</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:co2_emission</span><span class="o">]</span> <span class="o">+</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:ch4_emission</span><span class="o">]</span> <span class="o">+</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:n2o_emission</span><span class="o">]</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-6'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-6">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_calculation">&#182;</a>
         </div>
         <h2>CO<sub>2</sub> emission calculation</h2>
 
-<p> Returns the <code>co2 emission</code> (<em>kg</em>).</p>
+<p>Returns the <code>co2 emission</code> (<em>kg</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:co2_emission</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-7'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_from_electricity_use,_CO&lt;sub&gt;2&lt;/sub&gt;_emission_factor,_date,_and_timeframe'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-7">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_from_electricity_use,_CO&lt;sub&gt;2&lt;/sub&gt;_emission_factor,_date,_and_timeframe">&#182;</a>
         </div>
         <h3>CO<sub>2</sub> emission from electricity use, CO<sub>2</sub> emission factor, date, and timeframe</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from electricity use, co2 emission factor, date, and timeframe&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:electricity_use</span><span class="p">,</span> <span class="ss">:co2_emission_factor</span><span class="p">,</span> <span class="ss">:date</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-8">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
         </div>
-        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+        <p>Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="k">if</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">include?</span> <span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">characteristics</span><span class="o">[</span><span class="ss">:date</span><span class="o">].</span><span class="n">to_s</span><span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-9">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
-        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>co2 emission factor</code> (<em>kg / kWh</em>) to give <em>kg</em>.</p>
+        <p>Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>co2 emission factor</code> (<em>kg / kWh</em>) to give <em>kg</em>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:electricity_use</span><span class="o">]</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:co2_emission_factor</span><span class="o">]</span>
+              <span class="k">else</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-10">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
         </div>
-        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>co2 emission</code> is zero.</p>
+        <p>If the <code>date</code> does not fall within the <code>timeframe</code>, <code>co2 emission</code> is zero.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="mi">0</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-11'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-11">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_calculation">&#182;</a>
         </div>
         <h2>CO<sub>2</sub> biogenic emission calculation</h2>
 
-<p> Returns the <code>co2 biogenic emission</code> (<em>kg</em>).</p>
+<p>Returns the <code>co2 biogenic emission</code> (<em>kg</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:co2_biogenic_emission</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-12'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_from_electricity_use,_CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_factor,_date,_and_timeframe'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-12">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_from_electricity_use,_CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_factor,_date,_and_timeframe">&#182;</a>
         </div>
         <h3>CO<sub>2</sub> biogenic emission from electricity use, CO<sub>2</sub> biogenic emission factor, date, and timeframe</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from electricity use, co2 biogenic emission factor, date, and timeframe&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:electricity_use</span><span class="p">,</span> <span class="ss">:co2_biogenic_emission_factor</span><span class="p">,</span> <span class="ss">:date</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-13">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
         </div>
-        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+        <p>Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="k">if</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">include?</span> <span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">characteristics</span><span class="o">[</span><span class="ss">:date</span><span class="o">].</span><span class="n">to_s</span><span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-14">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
         </div>
-        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>) to give <em>kg</em>.</p>
+        <p>Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>) to give <em>kg</em>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:electricity_use</span><span class="o">]</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:co2_biogenic_emission_factor</span><span class="o">]</span>
+              <span class="k">else</span></pre></div>
       </td>
     </tr>
     <tr id='section-15'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-15">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
         </div>
-        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>co2 biogenic emission</code> is zero.</p>
+        <p>If the <code>date</code> does not fall within the <code>timeframe</code>, <code>co2 biogenic emission</code> is zero.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="mi">0</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-16'>
+    <tr id='section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-16">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_calculation">&#182;</a>
         </div>
         <h2>CH<sub>4</sub> emission calculation</h2>
 
-<p> Returns the <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
+<p>Returns the <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:ch4_emission</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-17'>
+    <tr id='section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_from_electricity_use,_CH&lt;sub&gt;4&lt;/sub&gt;_emission_factor,_date,_and_timeframe'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-17">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_from_electricity_use,_CH&lt;sub&gt;4&lt;/sub&gt;_emission_factor,_date,_and_timeframe">&#182;</a>
         </div>
         <h3>CH<sub>4</sub> emission from electricity use, CH<sub>4</sub> emission factor, date, and timeframe</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from electricity use, ch4 emission factor, date, and timeframe&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:electricity_use</span><span class="p">,</span> <span class="ss">:ch4_emission_factor</span><span class="p">,</span> <span class="ss">:date</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-18'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-18">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
         </div>
-        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+        <p>Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="k">if</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">include?</span> <span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">characteristics</span><span class="o">[</span><span class="ss">:date</span><span class="o">].</span><span class="n">to_s</span><span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-19'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-19">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
         </div>
-        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+        <p>Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:electricity_use</span><span class="o">]</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:ch4_emission_factor</span><span class="o">]</span>
+              <span class="k">else</span></pre></div>
       </td>
     </tr>
     <tr id='section-20'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-20">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-20">&#182;</a>
         </div>
-        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>ch4 emission</code> is zero.</p>
+        <p>If the <code>date</code> does not fall within the <code>timeframe</code>, <code>ch4 emission</code> is zero.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="mi">0</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-21'>
+    <tr id='section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-21">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_calculation">&#182;</a>
         </div>
         <h2>N<sub>2</sub>O emission calculation</h2>
 
-<p> Returns the <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
+<p>Returns the <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:n2o_emission</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-22'>
+    <tr id='section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_from_electricity_use,_N&lt;sub&gt;2&lt;/sub&gt;O_emission_factor,_date,_and_timeframe'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-22">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_from_electricity_use,_N&lt;sub&gt;2&lt;/sub&gt;O_emission_factor,_date,_and_timeframe">&#182;</a>
         </div>
         <h3>N<sub>2</sub>O emission from electricity use, N<sub>2</sub>O emission factor, date, and timeframe</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from electricity use, n2o emission factor, date, and timeframe&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:electricity_use</span><span class="p">,</span> <span class="ss">:n2o_emission_factor</span><span class="p">,</span> <span class="ss">:date</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-23'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-23">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-23">&#182;</a>
         </div>
-        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+        <p>Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="k">if</span> <span class="n">timeframe</span><span class="o">.</span><span class="n">include?</span> <span class="no">Date</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">characteristics</span><span class="o">[</span><span class="ss">:date</span><span class="o">].</span><span class="n">to_s</span><span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-24'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-24">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-24">&#182;</a>
         </div>
-        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+        <p>Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="n">characteristics</span><span class="o">[</span><span class="ss">:electricity_use</span><span class="o">]</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:n2o_emission_factor</span><span class="o">]</span>
+              <span class="k">else</span></pre></div>
       </td>
     </tr>
     <tr id='section-25'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-25">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-25">&#182;</a>
         </div>
-        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>n2o emission</code> is zero.</p>
+        <p>If the <code>date</code> does not fall within the <code>timeframe</code>, <code>n2o emission</code> is zero.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>                <span class="mi">0</span>
+              <span class="k">end</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-26'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_factor_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-26">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_factor_calculation">&#182;</a>
         </div>
         <h2>CO<sub>2</sub> emission factor calculation</h2>
 
-<p> Returns the <code>co2 emission factor</code> (<em>kg / kWh</em>).</p>
+<p>Returns the <code>co2 emission factor</code> (<em>kg / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:co2_emission_factor</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-27'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_factor_from_eGRID_subregion'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-27">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_emission_factor_from_eGRID_subregion">&#182;</a>
         </div>
         <h3>CO<sub>2</sub> emission factor from eGRID subregion</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from eGRID subregion&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:egrid_subregion</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-28'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-28">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-28">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>co2 emission factor</code> (<em>kg / kWh</em>).</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>co2 emission factor</code> (<em>kg / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_subregion</span><span class="o">].</span><span class="n">electricity_co2_emission_factor</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-29'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_factor_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-29">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_factor_calculation">&#182;</a>
         </div>
         <h2>CO<sub>2</sub> biogenic emission factor calculation</h2>
 
-<p> Returns the <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>).</p>
+<p>Returns the <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:co2_biogenic_emission_factor</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-30'>
+    <tr id='section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_factor_from_eGRID_subregion'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-30">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CO&lt;sub&gt;2&lt;/sub&gt;_biogenic_emission_factor_from_eGRID_subregion">&#182;</a>
         </div>
         <h3>CO<sub>2</sub> biogenic emission factor from eGRID subregion</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from eGRID subregion&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:egrid_subregion</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-31'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-31">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-31">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>).</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_subregion</span><span class="o">].</span><span class="n">electricity_co2_biogenic_emission_factor</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-32'>
+    <tr id='section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_factor_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-32">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_factor_calculation">&#182;</a>
         </div>
         <h2>CH<sub>4</sub> emission factor calculation</h2>
 
-<p> Returns the <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+<p>Returns the <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:ch4_emission_factor</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-33'>
+    <tr id='section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_factor_from_eGRID_subregion'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-33">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-CH&lt;sub&gt;4&lt;/sub&gt;_emission_factor_from_eGRID_subregion">&#182;</a>
         </div>
         <h3>CH<sub>4</sub> emission factor from eGRID subregion</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from eGRID subregion&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:egrid_subregion</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-34'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-34">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-34">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_subregion</span><span class="o">].</span><span class="n">electricity_ch4_emission_factor</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-35'>
+    <tr id='section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_factor_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-35">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_factor_calculation">&#182;</a>
         </div>
         <h2>N<sub>2</sub>O emission factor calculation</h2>
 
-<p> Returns the <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+<p>Returns the <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:n2o_emission_factor</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-36'>
+    <tr id='section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_factor_from_eGRID_subregion'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-36">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-N&lt;sub&gt;2&lt;/sub&gt;O_emission_factor_from_eGRID_subregion">&#182;</a>
         </div>
         <h3>N<sub>2</sub>O emission factor from eGRID subregion</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from eGRID subregion&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:egrid_subregion</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-37'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-37">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-37">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_subregion</span><span class="o">].</span><span class="n">electricity_n2o_emission_factor</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-38'>
+    <tr id='section-Electricity_use_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-38">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_use_calculation">&#182;</a>
         </div>
         <h2>Electricity use calculation</h2>
 
-<p> Returns <code>electricity use</code> (<em>kWh</em>) including distribution losses.</p>
+<p>Returns <code>electricity use</code> (<em>kWh</em>) including distribution losses.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:electricity_use</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-39'>
+    <tr id='section-Electricity_use_from_duration,_electricity_intensity,_PUE,_and_electricity_loss_factor'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-39">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_use_from_duration,_electricity_intensity,_PUE,_and_electricity_loss_factor">&#182;</a>
         </div>
         <h3>Electricity use from duration, electricity intensity, PUE, and electricity loss factor</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from duration, electricity intensity, PUE, and electricity loss factor&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:duration</span><span class="p">,</span> <span class="ss">:electricity_intensity</span><span class="p">,</span> <span class="ss">:power_usage_effectiveness</span><span class="p">,</span> <span class="ss">:electricity_loss_factor</span><span class="o">]</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-40'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-40">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-40">&#182;</a>
         </div>
-        <p> Divides <code>duration</code> (<em>seconds</em>) by 3,600 <em>seconds / hour</em>, multiplies by <code>electricity intensity</code> (<em>kW</em>) and <code>PUE</code>, and divides by (1 &ndash; <code>electricity loss factor</code>) to give <em>kWh</em>.</p>
+        <p>Divides <code>duration</code> (<em>seconds</em>) by 3,600 <em>seconds / hour</em>, multiplies by <code>electricity intensity</code> (<em>kW</em>) and <code>PUE</code>, and divides by (1 &ndash; <code>electricity loss factor</code>) to give <em>kWh</em>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="p">(</span><span class="n">characteristics</span><span class="o">[</span><span class="ss">:duration</span><span class="o">]</span> <span class="o">/</span> <span class="mi">3600</span><span class="o">.</span><span class="mi">0</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:electricity_intensity</span><span class="o">]</span> <span class="o">*</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:power_usage_effectiveness</span><span class="o">]</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">characteristics</span><span class="o">[</span><span class="ss">:electricity_loss_factor</span><span class="o">]</span><span class="p">)</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-41'>
+    <tr id='section-Electricity_loss_factor_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-41">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_loss_factor_calculation">&#182;</a>
         </div>
         <h2>Electricity loss factor calculation</h2>
 
-<p> Returns the <code>electricity loss factor</code>. This is the percentage of electricity lost during transmission and distribution.</p>
+<p>Returns the <code>electricity loss factor</code>. This is the percentage of electricity lost during transmission and distribution.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:electricity_loss_factor</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-42'>
+    <tr id='section-Electricity_loss_factor_from_eGRID_region'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-42">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_loss_factor_from_eGRID_region">&#182;</a>
         </div>
         <h3>Electricity loss factor from eGRID region</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from eGRID region&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:egrid_region</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-43'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-43">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-43">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_regions">eGRID region</a> <code>electricity loss factor</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_regions">eGRID region</a> <code>electricity loss factor</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_region</span><span class="o">].</span><span class="n">loss_factor</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-44'>
+    <tr id='section-eGRID_region_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-44">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-eGRID_region_calculation">&#182;</a>
         </div>
         <h2>eGRID region calculation</h2>
 
-<p> Returns the <code>eGRID region</code> where the data center is located.</p>
+<p>Returns the <code>eGRID region</code> where the data center is located.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:egrid_region</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-45'>
+    <tr id='section-eGRID_region_from_eGRID_subregion'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-45">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-eGRID_region_from_eGRID_subregion">&#182;</a>
         </div>
         <h3>eGRID region from eGRID subregion</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from eGRID subregion&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:egrid_subregion</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-46'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-46">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-46">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID region</a> <code>eGRID region</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID region</a> <code>eGRID region</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:egrid_subregion</span><span class="o">].</span><span class="n">egrid_region</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-47'>
+    <tr id='section-eGRID_subregion_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-47">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-eGRID_subregion_calculation">&#182;</a>
         </div>
         <h2>eGRID subregion calculation</h2>
 
-<p> Returns the <code>eGRID subregion</code> where the data center is located.</p>
+<p>Returns the <code>eGRID subregion</code> where the data center is located.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:egrid_subregion</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-48'>
+    <tr id='section-eGRID_subregion_from_zip_code'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-48">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-eGRID_subregion_from_zip_code">&#182;</a>
         </div>
         <h3>eGRID subregion from zip code</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from zip code&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:zip_code</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-49'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-49">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-49">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/zip_codes">zip code</a> <code>eGRID subregion</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/zip_codes">zip code</a> <code>eGRID subregion</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:zip_code</span><span class="o">].</span><span class="n">egrid_subregion</span>
+            <span class="k">end</span>
+            </pre></div>
       </td>
     </tr>
-    <tr id='section-50'>
+    <tr id='section-eGRID_subregion_from_carrier_region'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-50">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-eGRID_subregion_from_carrier_region">&#182;</a>
         </div>
         <h3>eGRID subregion from carrier region</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from carrier region&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:carrier_region</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-51'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-51">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-51">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/computation_carrier_regions">carrier region</a> <code>eGRID subregion</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/computation_carrier_regions">carrier region</a> <code>eGRID subregion</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:carrier_region</span><span class="o">].</span><span class="n">egrid_subregion</span>
+            <span class="k">end</span>
+            </pre></div>
       </td>
     </tr>
-    <tr id='section-52'>
+    <tr id='section-Default_eGRID_subregion'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-52">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Default_eGRID_subregion">&#182;</a>
         </div>
         <h3>Default eGRID subregion</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
     <tr id='section-53'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-53">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-53">&#182;</a>
         </div>
-        <p> Uses the fallback <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a>, representing the U.S. average.</p>
+        <p>Uses the fallback <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a>, representing the U.S. average.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="no">EgridSubregion</span><span class="o">.</span><span class="n">fallback</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-54'>
+    <tr id='section-Zip_code_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-54">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Zip_code_calculation">&#182;</a>
         </div>
         <h2>Zip code calculation</h2>
 
-<p> Returns the client-input <code>zip code</code> of the data center.</p>
+<p>Returns the client-input <code>zip code</code> of the data center.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          </pre></div>
       </td>
     </tr>
-    <tr id='section-55'>
+    <tr id='section-Carrier_region_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-55">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Carrier_region_calculation">&#182;</a>
         </div>
         <h2>Carrier region calculation</h2>
 
-<p> Returns the client-input <a href="http://data.brighterplanet.com/computation_carrier_regions">carrier region</a> of the data center.</p>
+<p>Returns the client-input <a href="http://data.brighterplanet.com/computation_carrier_regions">carrier region</a> of the data center.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          </pre></div>
       </td>
     </tr>
-    <tr id='section-56'>
+    <tr id='section-Power_usage_effectiveness_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-56">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Power_usage_effectiveness_calculation">&#182;</a>
         </div>
         <h2>Power usage effectiveness calculation</h2>
 
-<p> Returns the <code>power usage effectiveness</code> (PUE). This is the ratio of total data center power to IT infrastructure power.</p>
+<p>Returns the <code>power usage effectiveness</code> (PUE). This is the ratio of total data center power to IT infrastructure power.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:power_usage_effectiveness</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-57'>
+    <tr id='section-Power_usage_effectivenss_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-57">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Power_usage_effectivenss_from_client_input">&#182;</a>
         </div>
         <h3>Power usage effectivenss from client input</h3>
 
-<p> Uses the client-input <code>power usage effectiveness</code>.</p>
+<p>Uses the client-input <code>power usage effectiveness</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-58'>
+    <tr id='section-Power_usage_effectiveness_from_carrier'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-58">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Power_usage_effectiveness_from_carrier">&#182;</a>
         </div>
         <h3>Power usage effectiveness from carrier</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from carrier&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:carrier</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-59'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-59">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-59">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/carriers">carrier</a> <code>power usage effectiveness</code>.</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/carriers">carrier</a> <code>power usage effectiveness</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:carrier</span><span class="o">].</span><span class="n">power_usage_effectiveness</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-60'>
+    <tr id='section-Electricity_intensity_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-60">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_intensity_calculation">&#182;</a>
         </div>
         <h2>Electricity intensity calculation</h2>
 
-<p> Returns the <code>electricity intensity</code> (<em>kW</em>). This is the average load of the data center IT infrastructure.</p>
+<p>Returns the <code>electricity intensity</code> (<em>kW</em>). This is the average load of the data center IT infrastructure.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:electricity_intensity</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-61'>
+    <tr id='section-Electricity_intensity_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-61">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_intensity_from_client_input">&#182;</a>
         </div>
         <h3>Electricity intensity from client input</h3>
 
-<p> Uses the client-input <code>electricity intensity</code> (<em>kW</em>).</p>
+<p>Uses the client-input <code>electricity intensity</code> (<em>kW</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-62'>
+    <tr id='section-Electricity_intensity_from_carrier_instance_class'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-62">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Electricity_intensity_from_carrier_instance_class">&#182;</a>
         </div>
         <h3>Electricity intensity from carrier instance class</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from carrier instance class&#39;</span><span class="p">,</span> <span class="ss">:needs</span> <span class="o">=&gt;</span> <span class="ss">:carrier_instance_class</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-63'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-63">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-63">&#182;</a>
         </div>
-        <p> Looks up the <a href="http://data.brighterplanet.com/carrier_instance_classes">carrier instance class</a> <code>electricity intensity</code> (<em>kW</em>).</p>
+        <p>Looks up the <a href="http://data.brighterplanet.com/carrier_instance_classes">carrier instance class</a> <code>electricity intensity</code> (<em>kW</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">characteristics</span><span class="o">[</span><span class="ss">:carrier_instance_class</span><span class="o">].</span><span class="n">electricity_intensity</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-64'>
+    <tr id='section-Carrier_instance_class_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-64">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Carrier_instance_class_calculation">&#182;</a>
         </div>
         <h2>Carrier instance class calculation</h2>
 
-<p> Returns the computation <code>carrier instance class</code>. This is the type of virtual instance.</p>
+<p>Returns the computation <code>carrier instance class</code>. This is the type of virtual instance.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:carrier_instance_class</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-65'>
+    <tr id='section-Carrier_instance_class_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-65">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Carrier_instance_class_from_client_input">&#182;</a>
         </div>
         <h3>Carrier instance class from client input</h3>
 
-<p> Uses the client-input <a href="http://data.brighterplanet.com/computation_carrier_instance_classes">carrier instance class</a>.</p>
+<p>Uses the client-input <a href="http://data.brighterplanet.com/computation_carrier_instance_classes">carrier instance class</a>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-66'>
+    <tr id='section-Default_carrier_instance_class'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-66">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Default_carrier_instance_class">&#182;</a>
         </div>
         <h3>Default carrier instance class</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
     <tr id='section-67'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-67">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-67">&#182;</a>
         </div>
-        <p> Assumes <a href="http://data.brighterplanet.com/computation_instance_classes">Amazon m1.small</a>.</p>
+        <p>Assumes <a href="http://data.brighterplanet.com/computation_instance_classes">Amazon m1.small</a>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="no">ComputationCarrierInstanceClass</span><span class="o">.</span><span class="n">fallback</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-68'>
+    <tr id='section-Carrier_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-68">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Carrier_calculation">&#182;</a>
         </div>
         <h2>Carrier calculation</h2>
 
-<p> Returns the computation <code>carrier</code>. This is the company that runs the data center.</p>
+<p>Returns the computation <code>carrier</code>. This is the company that runs the data center.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:carrier</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-69'>
+    <tr id='section-Carrier_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-69">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Carrier_from_client_input">&#182;</a>
         </div>
         <h3>Carrier from client input</h3>
 
-<p> Uses the client-input <a href="http://data.brighterplanet.com/computation_carriers">carrier</a>.</p>
+<p>Uses the client-input <a href="http://data.brighterplanet.com/computation_carriers">carrier</a>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-70'>
+    <tr id='section-Default_carrier'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-70">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Default_carrier">&#182;</a>
         </div>
         <h3>Default carrier</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
     <tr id='section-71'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-71">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-71">&#182;</a>
         </div>
-        <p> Assumes <a href="http://data.brighterplanet.com/computation_carriers">Amazon</a>.</p>
+        <p>Assumes <a href="http://data.brighterplanet.com/computation_carriers">Amazon</a>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="no">ComputationCarrier</span><span class="o">.</span><span class="n">fallback</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-72'>
+    <tr id='section-Duration_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-72">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Duration_calculation">&#182;</a>
         </div>
         <h2>Duration calculation</h2>
 
-<p> Returns the computation&rsquo;s <code>duration</code> (<em>seconds</em>).</p>
+<p>Returns the computation&rsquo;s <code>duration</code> (<em>seconds</em>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:duration</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-73'>
+    <tr id='section-Duration_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-73">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Duration_from_client_input">&#182;</a>
         </div>
         <h3>Duration from client input</h3>
 
-<p> Uses the client-input <code>duration</code>.</p>
+<p>Uses the client-input <code>duration</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-74'>
+    <tr id='section-Default_duration'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-74">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Default_duration">&#182;</a>
         </div>
         <h3>Default duration</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;default&#39;</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
     <tr id='section-75'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-75">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-75">&#182;</a>
         </div>
-        <p> Assumes 3,600 <em>seconds</em>.</p>
+        <p>Assumes 3,600 <em>seconds</em>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">base</span><span class="o">.</span><span class="n">fallback</span><span class="o">.</span><span class="n">duration</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-76'>
+    <tr id='section-Date_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-76">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Date_calculation">&#182;</a>
         </div>
         <h2>Date calculation</h2>
 
-<p> Returns the <code>date</code> on which the computation occurred.</p>
+<p>Returns the <code>date</code> on which the computation occurred.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>          <span class="n">committee</span> <span class="ss">:date</span> <span class="k">do</span></pre></div>
       </td>
     </tr>
-    <tr id='section-77'>
+    <tr id='section-Date_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-77">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Date_from_client_input">&#182;</a>
         </div>
         <h3>Date from client input</h3>
 
-<p> Uses the client-input <code>date</code>.</p>
+<p>Uses the client-input <code>date</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-78'>
+    <tr id='section-Date_from_timeframe'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-78">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Date_from_timeframe">&#182;</a>
         </div>
         <h3>Date from timeframe</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            <span class="n">quorum</span> <span class="s1">&#39;from timeframe&#39;</span> <span class="k">do</span> <span class="o">|</span><span class="n">characteristics</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">|</span></pre></div>
       </td>
     </tr>
     <tr id='section-79'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-79">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-79">&#182;</a>
         </div>
-        <p> Assumes the first day of the <code>timeframe</code>.</p>
+        <p>Assumes the first day of the <code>timeframe</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>              <span class="n">timeframe</span><span class="o">.</span><span class="n">from</span>
+            <span class="k">end</span>
+          <span class="k">end</span>
+          </pre></div>
       </td>
     </tr>
-    <tr id='section-80'>
+    <tr id='section-Timeframe_calculation'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-80">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Timeframe_calculation">&#182;</a>
         </div>
         <h2>Timeframe calculation</h2>
 
-<p> Returns the <code>timeframe</code>.
- This is the period during which to calculate emissions.</p>
+<p>Returns the <code>timeframe</code>.
+This is the period during which to calculate emissions.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-81'>
+    <tr id='section-Timeframe_from_client_input'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-81">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Timeframe_from_client_input">&#182;</a>
         </div>
         <h3>Timeframe from client input</h3>
 
-<p> <strong>Complies:</strong> All</p>
+<p><strong>Complies:</strong> All</p>
 
-<p> Uses the client-input <code>timeframe</code>.</p>
+<p>Uses the client-input <code>timeframe</code>.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>            </pre></div>
       </td>
     </tr>
-    <tr id='section-82'>
+    <tr id='section-Default_timeframe'>
       <td class=docs>
-        <div class="octowrap">
-          <a class="octothorpe" href="#section-82">#</a>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Default_timeframe">&#182;</a>
         </div>
         <h3>Default timeframe</h3>
 
-<p> <strong>Complies:</strong> All</p>
+<p><strong>Complies:</strong> All</p>
 
-<p> Uses the current calendar year.</p>
+<p>Uses the current calendar year.</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre></pre></div>
+        <div class='highlight'><pre>        <span class="k">end</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></pre></div>
       </td>
     </tr>
   </table>
