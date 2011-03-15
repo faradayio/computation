@@ -24,7 +24,7 @@ module BrighterPlanet
           ### Emission calculation
           # Returns the `emission` (*kg CO<sub>2</sub>e*).
           committee :emission do
-            #### Emission from CO<sub>2</sub> emission, CH<sub>h</sub> emission, and N<sub>2</sub>O emission
+            #### Emission from CO<sub>2</sub> emission, CH<sub>4</sub> emission, and N<sub>2</sub>O emission
             quorum 'from co2 emission, ch4 emission, and n2o emission', :needs => [:co2_emission, :ch4_emission, :n2o_emission] do |characteristics|
               # Adds `co2 emission` (*kg*), `ch4 emission` (*kg CO<sub>2</sub>e*), and `n2o emission` (*kg CO<sub>2</sub>e*) to give (*kg CO<sub>2</sub>e*).
               characteristics[:co2_emission] + characteristics[:ch4_emission] + characteristics[:n2o_emission]
@@ -160,7 +160,7 @@ module BrighterPlanet
           committee :egrid_region do
             #### eGRID region from eGRID subregion
             quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
-              # Looks up the [eGRID region](http://data.brighterplanet.com/egrid_subregions) `eGRID region`.
+              # Looks up the [eGRID subregion](http://data.brighterplanet.com/egrid_subregions) `eGRID region`.
               characteristics[:egrid_subregion].egrid_region
             end
           end
@@ -201,7 +201,7 @@ module BrighterPlanet
             
             #### Power usage effectiveness from carrier
             quorum 'from carrier', :needs => :carrier do |characteristics|
-              # Looks up the [carrier](http://data.brighterplanet.com/carriers) `power usage effectiveness`.
+              # Looks up the [carrier](http://data.brighterplanet.com/computation_carriers) `power usage effectiveness`.
               characteristics[:carrier].power_usage_effectiveness
             end
           end
@@ -214,7 +214,7 @@ module BrighterPlanet
             
             #### Electricity intensity from carrier instance class
             quorum 'from carrier instance class', :needs => :carrier_instance_class do |characteristics|
-              # Looks up the [carrier instance class](http://data.brighterplanet.com/carrier_instance_classes) `electricity intensity` (*kW*).
+              # Looks up the [carrier instance class](http://data.brighterplanet.com/computation_carrier_instance_classes) `electricity intensity` (*kW*).
               characteristics[:carrier_instance_class].electricity_intensity
             end
           end
@@ -227,7 +227,7 @@ module BrighterPlanet
             
             #### Default carrier instance class
             quorum 'default' do
-              # Assumes [Amazon m1.small](http://data.brighterplanet.com/computation_instance_classes).
+              # Assumes [Amazon m1.small](http://data.brighterplanet.com/computation_carrier_instance_classes).
               ComputationCarrierInstanceClass.fallback
             end
           end
