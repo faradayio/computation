@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>carbon_model.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>carbon_model.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-1">#</a>
+        </div>
+        <p> Copyright © 2010 Brighter Planet.
+ See LICENSE for details.
+ Contact Brighter Planet for dual-license arrangements.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-2">#</a>
+        </div>
+        <h1>Computation carbon model</h1>
+
+<p> This model is used by <a href="http://brighterplanet.com">Brighter Planet</a>&rsquo;s carbon emission <a href="http://carbon.brighterplanet.com">web service</a> to estimate the <strong>greenhouse gas emissions of server use</strong>.</p>
+
+<h4>Timeframe and activity period</h4>
+
+<p> The model estimates the emissions that occur during a particular <code>timeframe</code>. To do this it needs to know the <code>date</code> on which the computations occurred. For example, if the <code>timeframe</code> is January 2010, a computation that occurred on January 5, 2010 will have emissions but a computation that occurred on February 1, 2010 will not.</p>
+
+<h4>Calculations</h4>
+
+<p> The final estimate is the result of the <strong>calculations</strong> detailed below. These calculations are performed in reverse order, starting with the last calculation listed and finishing with the <code>emission</code> calculation. Each calculation is named according to the value it returns.</p>
+
+<h4>Methods</h4>
+
+<p> To accomodate varying client input, each calculation may have one or more <strong>methods</strong>. These are listed under each calculation in order from most to least preferred. Each method is named according to the values it requires. If any of these values is not available the method will be ignored. If all the methods for a calculation are ignored, the calculation will not return a value. &ldquo;Default&rdquo; methods do not require any values, and so a calculation with a default method will always return a value.</p>
+
+<h4>Collaboration</h4>
+
+<p> Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see <a href="http://github.com/brighterplanet/sniff#readme">sniff</a>, our emitter testing framework, for more information.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-3">#</a>
+        </div>
+        <h2>Emission calculation</h2>
+
+<p> Returns the <code>emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-4">#</a>
+        </div>
+        <h3>Emission from CO<sub>2</sub> emission, CH<sub>h</sub> emission, and N<sub>2</sub>O emission</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-5">#</a>
+        </div>
+        <p> Adds <code>co2 emission</code> (<em>kg</em>), <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>), and <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>) to give (<em>kg CO<sub>2</sub>e</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-6">#</a>
+        </div>
+        <h2>CO<sub>2</sub> emission calculation</h2>
+
+<p> Returns the <code>co2 emission</code> (<em>kg</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-7">#</a>
+        </div>
+        <h3>CO<sub>2</sub> emission from electricity use, CO<sub>2</sub> emission factor, date, and timeframe</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-8">#</a>
+        </div>
+        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-9">#</a>
+        </div>
+        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>co2 emission factor</code> (<em>kg / kWh</em>) to give <em>kg</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-10">#</a>
+        </div>
+        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>co2 emission</code> is zero.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-11">#</a>
+        </div>
+        <h2>CO<sub>2</sub> biogenic emission calculation</h2>
+
+<p> Returns the <code>co2 biogenic emission</code> (<em>kg</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-12">#</a>
+        </div>
+        <h3>CO<sub>2</sub> biogenic emission from electricity use, CO<sub>2</sub> biogenic emission factor, date, and timeframe</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-13">#</a>
+        </div>
+        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-14">#</a>
+        </div>
+        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>) to give <em>kg</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-15">#</a>
+        </div>
+        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>co2 biogenic emission</code> is zero.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-16">#</a>
+        </div>
+        <h2>CH<sub>4</sub> emission calculation</h2>
+
+<p> Returns the <code>ch4 emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-17">#</a>
+        </div>
+        <h3>CH<sub>4</sub> emission from electricity use, CH<sub>4</sub> emission factor, date, and timeframe</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-18">#</a>
+        </div>
+        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-19">#</a>
+        </div>
+        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-20'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-20">#</a>
+        </div>
+        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>ch4 emission</code> is zero.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-21'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-21">#</a>
+        </div>
+        <h2>N<sub>2</sub>O emission calculation</h2>
+
+<p> Returns the <code>n2o emission</code> (<em>kg CO<sub>2</sub>e</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-22'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-22">#</a>
+        </div>
+        <h3>N<sub>2</sub>O emission from electricity use, N<sub>2</sub>O emission factor, date, and timeframe</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-23'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-23">#</a>
+        </div>
+        <p> Checks whether the computation <code>date</code> falls within the <code>timeframe</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-24'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-24">#</a>
+        </div>
+        <p> Multiplies <code>electricity use</code> (<em>kWh</em>) by <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>) to give <em>kg CO<sub>2</sub>e</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-25'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-25">#</a>
+        </div>
+        <p> If the <code>date</code> does not fall within the <code>timeframe</code>, <code>n2o emission</code> is zero.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-26'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-26">#</a>
+        </div>
+        <h2>CO<sub>2</sub> emission factor calculation</h2>
+
+<p> Returns the <code>co2 emission factor</code> (<em>kg / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-27'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-27">#</a>
+        </div>
+        <h3>CO<sub>2</sub> emission factor from eGRID subregion</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-28'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-28">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>co2 emission factor</code> (<em>kg / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-29'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-29">#</a>
+        </div>
+        <h2>CO<sub>2</sub> biogenic emission factor calculation</h2>
+
+<p> Returns the <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-30'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-30">#</a>
+        </div>
+        <h3>CO<sub>2</sub> biogenic emission factor from eGRID subregion</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-31'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-31">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>co2 biogenic emission factor</code> (<em>kg / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-32'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-32">#</a>
+        </div>
+        <h2>CH<sub>4</sub> emission factor calculation</h2>
+
+<p> Returns the <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-33'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-33">#</a>
+        </div>
+        <h3>CH<sub>4</sub> emission factor from eGRID subregion</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-34'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-34">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>ch4 emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-35'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-35">#</a>
+        </div>
+        <h2>N<sub>2</sub>O emission factor calculation</h2>
+
+<p> Returns the <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-36'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-36">#</a>
+        </div>
+        <h3>N<sub>2</sub>O emission factor from eGRID subregion</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-37'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-37">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a> <code>n2o emission factor</code> (<em>kg CO<sub>2</sub>e / kWh</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-38'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-38">#</a>
+        </div>
+        <h2>Electricity use calculation</h2>
+
+<p> Returns <code>electricity use</code> (<em>kWh</em>) including distribution losses.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-39'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-39">#</a>
+        </div>
+        <h3>Electricity use from duration, electricity intensity, PUE, and electricity loss factor</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-40'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-40">#</a>
+        </div>
+        <p> Divides <code>duration</code> (<em>seconds</em>) by 3,600 <em>seconds / hour</em>, multiplies by <code>electricity intensity</code> (<em>kW</em>) and <code>PUE</code>, and divides by (1 &ndash; <code>electricity loss factor</code>) to give <em>kWh</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-41'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-41">#</a>
+        </div>
+        <h2>Electricity loss factor calculation</h2>
+
+<p> Returns the <code>electricity loss factor</code>. This is the percentage of electricity lost during transmission and distribution.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-42'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-42">#</a>
+        </div>
+        <h3>Electricity loss factor from eGRID region</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-43'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-43">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_regions">eGRID region</a> <code>electricity loss factor</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-44'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-44">#</a>
+        </div>
+        <h2>eGRID region calculation</h2>
+
+<p> Returns the <code>eGRID region</code> where the data center is located.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-45'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-45">#</a>
+        </div>
+        <h3>eGRID region from eGRID subregion</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-46'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-46">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/egrid_subregions">eGRID region</a> <code>eGRID region</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-47'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-47">#</a>
+        </div>
+        <h2>eGRID subregion calculation</h2>
+
+<p> Returns the <code>eGRID subregion</code> where the data center is located.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-48'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-48">#</a>
+        </div>
+        <h3>eGRID subregion from zip code</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-49'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-49">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/zip_codes">zip code</a> <code>eGRID subregion</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-50'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-50">#</a>
+        </div>
+        <h3>eGRID subregion from carrier region</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-51'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-51">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/computation_carrier_regions">carrier region</a> <code>eGRID subregion</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-52'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-52">#</a>
+        </div>
+        <h3>Default eGRID subregion</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-53'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-53">#</a>
+        </div>
+        <p> Uses the fallback <a href="http://data.brighterplanet.com/egrid_subregions">eGRID subregion</a>, representing the U.S. average.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-54'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-54">#</a>
+        </div>
+        <h2>Zip code calculation</h2>
+
+<p> Returns the client-input <code>zip code</code> of the data center.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-55'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-55">#</a>
+        </div>
+        <h2>Carrier region calculation</h2>
+
+<p> Returns the client-input <a href="http://data.brighterplanet.com/computation_carrier_regions">carrier region</a> of the data center.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-56'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-56">#</a>
+        </div>
+        <h2>Power usage effectiveness calculation</h2>
+
+<p> Returns the <code>power usage effectiveness</code> (PUE). This is the ratio of total data center power to IT infrastructure power.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-57'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-57">#</a>
+        </div>
+        <h3>Power usage effectivenss from client input</h3>
+
+<p> Uses the client-input <code>power usage effectiveness</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-58'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-58">#</a>
+        </div>
+        <h3>Power usage effectiveness from carrier</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-59'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-59">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/carriers">carrier</a> <code>power usage effectiveness</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-60'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-60">#</a>
+        </div>
+        <h2>Electricity intensity calculation</h2>
+
+<p> Returns the <code>electricity intensity</code> (<em>kW</em>). This is the average load of the data center IT infrastructure.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-61'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-61">#</a>
+        </div>
+        <h3>Electricity intensity from client input</h3>
+
+<p> Uses the client-input <code>electricity intensity</code> (<em>kW</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-62'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-62">#</a>
+        </div>
+        <h3>Electricity intensity from carrier instance class</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-63'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-63">#</a>
+        </div>
+        <p> Looks up the <a href="http://data.brighterplanet.com/carrier_instance_classes">carrier instance class</a> <code>electricity intensity</code> (<em>kW</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-64'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-64">#</a>
+        </div>
+        <h2>Carrier instance class calculation</h2>
+
+<p> Returns the computation <code>carrier instance class</code>. This is the type of virtual instance.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-65'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-65">#</a>
+        </div>
+        <h3>Carrier instance class from client input</h3>
+
+<p> Uses the client-input <a href="http://data.brighterplanet.com/computation_carrier_instance_classes">carrier instance class</a>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-66'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-66">#</a>
+        </div>
+        <h3>Default carrier instance class</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-67'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-67">#</a>
+        </div>
+        <p> Assumes <a href="http://data.brighterplanet.com/computation_instance_classes">Amazon m1.small</a>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-68'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-68">#</a>
+        </div>
+        <h2>Carrier calculation</h2>
+
+<p> Returns the computation <code>carrier</code>. This is the company that runs the data center.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-69'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-69">#</a>
+        </div>
+        <h3>Carrier from client input</h3>
+
+<p> Uses the client-input <a href="http://data.brighterplanet.com/computation_carriers">carrier</a>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-70'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-70">#</a>
+        </div>
+        <h3>Default carrier</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-71'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-71">#</a>
+        </div>
+        <p> Assumes <a href="http://data.brighterplanet.com/computation_carriers">Amazon</a>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-72'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-72">#</a>
+        </div>
+        <h2>Duration calculation</h2>
+
+<p> Returns the computation&rsquo;s <code>duration</code> (<em>seconds</em>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-73'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-73">#</a>
+        </div>
+        <h3>Duration from client input</h3>
+
+<p> Uses the client-input <code>duration</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-74'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-74">#</a>
+        </div>
+        <h3>Default duration</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-75'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-75">#</a>
+        </div>
+        <p> Assumes 3,600 <em>seconds</em>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-76'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-76">#</a>
+        </div>
+        <h2>Date calculation</h2>
+
+<p> Returns the <code>date</code> on which the computation occurred.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-77'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-77">#</a>
+        </div>
+        <h3>Date from client input</h3>
+
+<p> Uses the client-input <code>date</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-78'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-78">#</a>
+        </div>
+        <h3>Date from timeframe</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-79'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-79">#</a>
+        </div>
+        <p> Assumes the first day of the <code>timeframe</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-80'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-80">#</a>
+        </div>
+        <h2>Timeframe calculation</h2>
+
+<p> Returns the <code>timeframe</code>.
+ This is the period during which to calculate emissions.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-81'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-81">#</a>
+        </div>
+        <h3>Timeframe from client input</h3>
+
+<p> <strong>Complies:</strong> All</p>
+
+<p> Uses the client-input <code>timeframe</code>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-82'>
+      <td class=docs>
+        <div class="octowrap">
+          <a class="octothorpe" href="#section-82">#</a>
+        </div>
+        <h3>Default timeframe</h3>
+
+<p> <strong>Complies:</strong> All</p>
+
+<p> Uses the current calendar year.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
