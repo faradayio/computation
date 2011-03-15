@@ -179,7 +179,7 @@ Feature: Computation Committee Calculations
     When the "egrid_subregion" committee is calculated
     And the "ch4_emission_factor" committee is calculated
     Then the committee should have used quorum "from eGRID subregion"
-    And the conclusion of the committee should be "0.00218"
+    And the conclusion of the committee should be "0.00030"
 
   Scenario Outline: CH4 emission factor from egrid subregion
     Given a computation emitter
@@ -189,8 +189,8 @@ Feature: Computation Committee Calculations
     And the conclusion of the committee should be "<ef>"
     Examples:
       | subregion | ef     |
-      | SRVC      | 0.003  |
-      | CAMX      | 0.001  |
+      | SRVC      | 0.0003 |
+      | CAMX      | 0.0003 |
 
   Scenario: CO2 biogenic emission factor from default
     Given a computation emitter
