@@ -4,7 +4,7 @@ module BrighterPlanet
       def self.included(base)
         base.characterize do
           has :date
-          has :duration
+          has :duration, :measures => :time
           has :carrier
           has :carrier_region
           has :carrier_instance_class
