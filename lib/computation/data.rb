@@ -2,7 +2,7 @@ module BrighterPlanet
   module Computation
     module Data
       def self.included(base)
-        base.create_table do
+        base.force_schema do
           date   'date'
           float  'duration'
           string 'computation_carrier_name'
