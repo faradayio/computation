@@ -18,12 +18,12 @@
 # Contributions to this carbon model are actively encouraged and warmly welcomed. This library includes a comprehensive test suite to ensure that your changes do not cause regressions. All changes should include test coverage for new functionality. Please see [sniff](https://github.com/brighterplanet/sniff#readme), our emitter testing framework, for more information.
 module BrighterPlanet
   module Computation
-    module CarbonModel
+    module ImpactModel
       def self.included(base)
-        base.decide :emission, :with => :characteristics do
+        base.decide :impact, :with => :characteristics do
           ### Emission calculation
           # Returns the `emission` (*kg CO<sub>2</sub>e*).
-          committee :emission do
+          committee :carbon do
             #### Emission from CO<sub>2</sub> emission, CH<sub>4</sub> emission, and N<sub>2</sub>O emission
             quorum 'from co2 emission, ch4 emission, and n2o emission', :needs => [:co2_emission, :ch4_emission, :n2o_emission] do |characteristics|
               # Adds `co2 emission` (*kg*), `ch4 emission` (*kg CO<sub>2</sub>e*), and `n2o emission` (*kg CO<sub>2</sub>e*) to give (*kg CO<sub>2</sub>e*).

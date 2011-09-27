@@ -2,16 +2,14 @@ module BrighterPlanet
   module Computation
     module Data
       def self.included(base)
-        base.force_schema do
-          date   'date'
-          float  'duration'
-          string 'computation_carrier_name'
-          string 'computation_carrier_region_name'
-          string 'computation_carrier_instance_class_name'
-          string 'zip_code_name'
-          float  'electricity_intensity'
-          float  'power_usage_effectiveness'
-        end
+        base.col :date, :type => :date
+        base.col :duration, :type => :float
+        base.col :computation_carrier_name
+        base.col :computation_carrier_region_name
+        base.col :computation_carrier_instance_class_name
+        base.col :zip_code_name
+        base.col :electricity_intensity, :type => :float
+        base.col :power_usage_effectiveness, :type => :float
       end
     end
   end
