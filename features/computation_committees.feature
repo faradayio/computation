@@ -11,16 +11,23 @@ Feature: Computation Committee Calculations
     And the conclusion of the committee should be "2009-06-06"
 
   Scenario: Duration commitee from default
-    Given the conclusion of the committee should be "3600.0"
+    When the "duration" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should be "3600.0"
 
   Scenario: Carrier committee from default
-    Given the conclusion of the committee should have "name" of "fallback"
+    When the "carrier" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "name" of "fallback"
 
   Scenario: Carrier instance class committee from default
-    Given the conclusion of the committee should have "name" of "fallback"
+    When the "carrier_instance_class" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "name" of "fallback"
 
   Scenario: Electricity intensity committee from default carrier instance class
-    Given the "electricity_intensity" committee reports
+    When the "carrier_instance_class" committee reports
+    And the "electricity_intensity" committee reports
     Then the committee should have used quorum "from carrier instance class"
     And the conclusion of the committee should be "0.1"
 
@@ -31,7 +38,8 @@ Feature: Computation Committee Calculations
     And the conclusion of the committee should be "0.4"
 
   Scenario: Power usage effectiveness committee from default carrier
-    Given the "power_usage_effectiveness" committee reports
+    When the "carrier" committee reports
+    And the "power_usage_effectiveness" committee reports
     Then the committee should have used quorum "from carrier"
     And the conclusion of the committee should be "1.5"
 
@@ -42,7 +50,9 @@ Feature: Computation Committee Calculations
     And the conclusion of the committee should be "1.5"
 
   Scenario: eGRID subregion committee from default
-    Given the conclusion of the committee should have "name" of "fallback"
+    When the "egrid_subregion" committee reports
+    Then the committee should have used quorum "default"
+    And the conclusion of the committee should have "name" of "fallback"
 
   Scenario: eGRID subregion commitee from carrier region
     Given a characteristic "carrier_region.name" of "Amazon us-east-1a"
@@ -57,7 +67,8 @@ Feature: Computation Committee Calculations
     And the conclusion of the committee should have "abbreviation" of "CAMX"
 
   Scenario: eGRID region committee from default eGRID subregion
-    Given the "egrid_region" committee reports
+    When the "egrid_subregion" committee reports
+    And the "egrid_region" committee reports
     Then the committee should have used quorum "from eGRID subregion"
     And the conclusion of the committee should have "name" of "fallback"
 
@@ -72,7 +83,8 @@ Feature: Computation Committee Calculations
       | CAMX      | W    |
 
   Scenario: Electricity loss factor committee from default eGRID region
-    Given the "egrid_region" committee reports
+    When the "egrid_subregion" committee reports
+    And the "egrid_region" committee reports
     And the "electricity_loss_factor" committee reports
     Then the committee should have used quorum "from eGRID region"
     And the conclusion of the committee should be "0.06188"
@@ -88,7 +100,8 @@ Feature: Computation Committee Calculations
       | W    | 0.05        |
 
   Scenario: Electricity use commitee from defaults
-    Given the "carrier" committee reports
+    When the "duration" committee reports
+    And the "carrier" committee reports
     And the "carrier_instance_class" committee reports
     And the "electricity_intensity" committee reports
     And the "power_usage_effectiveness" committee reports
@@ -129,7 +142,8 @@ Feature: Computation Committee Calculations
     And the conclusion of the committee should be "0.63158"
 
   Scenario: N2O emission factor from default
-    Given the "n2o_emission_factor" committee reports
+    When the "egrid_subregion" committee reports
+    And the "n2o_emission_factor" committee reports
     Then the committee should have used quorum "from eGRID subregion"
     And the conclusion of the committee should be "0.00218"
 
@@ -144,7 +158,8 @@ Feature: Computation Committee Calculations
       | CAMX      | 0.001 |
 
   Scenario: CH4 emission factor from default
-    Given the "ch4_emission_factor" committee reports
+    When the "egrid_subregion" committee reports
+    And the "ch4_emission_factor" committee reports
     Then the committee should have used quorum "from eGRID subregion"
     And the conclusion of the committee should be "0.00030"
 
@@ -159,7 +174,8 @@ Feature: Computation Committee Calculations
       | CAMX      | 0.0003 |
 
   Scenario: CO2 biogenic emission factor from default
-    Given the "co2_biogenic_emission_factor" committee reports
+    When the "egrid_subregion" committee reports
+    And the "co2_biogenic_emission_factor" committee reports
     Then the committee should have used quorum "from eGRID subregion"
     And the conclusion of the committee should be "0.0"
 
@@ -174,7 +190,8 @@ Feature: Computation Committee Calculations
       | CAMX      | 0.0 |
 
   Scenario: CO2 emission factor from default
-    Given the "co2_emission_factor" committee reports
+    When the "egrid_subregion" committee reports
+    And the "co2_emission_factor" committee reports
     Then the committee should have used quorum "from eGRID subregion"
     And the conclusion of the committee should be "0.41751"
 
