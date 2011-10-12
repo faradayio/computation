@@ -3,6 +3,6 @@ require 'computation'
 require 'sniff'
 
 class ComputationRecord < ActiveRecord::Base
-  include Sniff::Emitter
+  include BrighterPlanet::Emitter
   include BrighterPlanet::Computation
 end
