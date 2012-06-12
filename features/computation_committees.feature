@@ -87,7 +87,7 @@ Feature: Computation Committee Calculations
     And the "egrid_region" committee reports
     And the "electricity_loss_factor" committee reports
     Then the committee should have used quorum "from eGRID region"
-    And the conclusion of the committee should be "0.06188"
+    And the conclusion of the committee should be "0.05775"
 
   Scenario Outline: Electricity loss factor committee eGRID region
     Given a characteristic "egrid_region.name" of "<name>"
@@ -110,7 +110,7 @@ Feature: Computation Committee Calculations
     And the "electricity_loss_factor" committee reports
     And the "electricity_use" committee reports
     Then the committee should have used quorum "from duration, electricity intensity, PUE, and electricity loss factor"
-    And the conclusion of the committee should be "0.15989"
+    And the conclusion of the committee should be "0.15919"
 
   Scenario: Electricity use commitee from carrier, carrier instance class, and carrier region
     Given a characteristic "carrier.name" of "Amazon"
