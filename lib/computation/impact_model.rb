@@ -101,7 +101,7 @@ module BrighterPlanet
             #### CO<sub>2</sub> emission factor from eGRID subregion
             quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
               # Looks up the [eGRID subregion](http://data.brighterplanet.com/egrid_subregions) `co2 emission factor` (*kg / kWh*).
-              characteristics[:egrid_subregion].electricity_co2_emission_factor
+              characteristics[:egrid_subregion].co2_emission_factor
             end
           end
           
@@ -111,7 +111,7 @@ module BrighterPlanet
             #### CO<sub>2</sub> biogenic emission factor from eGRID subregion
             quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
               # Looks up the [eGRID subregion](http://data.brighterplanet.com/egrid_subregions) `co2 biogenic emission factor` (*kg / kWh*).
-              characteristics[:egrid_subregion].electricity_co2_biogenic_emission_factor
+              characteristics[:egrid_subregion].co2_biogenic_emission_factor
             end
           end
           
@@ -121,7 +121,7 @@ module BrighterPlanet
             #### CH<sub>4</sub> emission factor from eGRID subregion
             quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
               # Looks up the [eGRID subregion](http://data.brighterplanet.com/egrid_subregions) `ch4 emission factor` (*kg CO<sub>2</sub>e / kWh*).
-              characteristics[:egrid_subregion].electricity_ch4_emission_factor
+              characteristics[:egrid_subregion].ch4_emission_factor
             end
           end
           
@@ -131,7 +131,7 @@ module BrighterPlanet
             #### N<sub>2</sub>O emission factor from eGRID subregion
             quorum 'from eGRID subregion', :needs => :egrid_subregion do |characteristics|
               # Looks up the [eGRID subregion](http://data.brighterplanet.com/egrid_subregions) `n2o emission factor` (*kg CO<sub>2</sub>e / kWh*).
-              characteristics[:egrid_subregion].electricity_n2o_emission_factor
+              characteristics[:egrid_subregion].n2o_emission_factor
             end
           end
           
