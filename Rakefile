@@ -1,10 +1,3 @@
-require 'bundler'
-Bundler.setup
-
-require 'bueller'
-require 'bueller/tasks'
-Bueller::Tasks.new
-
-require 'sniff'
+require 'bundler/setup'
 require 'sniff/rake_tasks'
 Sniff::RakeTasks.define_tasks
