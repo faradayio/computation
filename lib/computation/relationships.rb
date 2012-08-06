@@ -1,3 +1,8 @@
+require 'earth/computation/computation_carrier'
+require 'earth/computation/computation_carrier_instance_class'
+require 'earth/computation/computation_carrier_region'
+require 'earth/locality/zip_code'
+
 module BrighterPlanet
   module Computation
     module Relationships

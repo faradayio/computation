@@ -2,6 +2,10 @@
 # See LICENSE for details.
 # Contact Brighter Planet for dual-license arrangements.
 
+require 'earth/computation/computation_carrier'
+require 'earth/computation/computation_carrier_instance_class'
+require 'earth/locality/egrid_subregion'
+
 ## Computation carbon model
 # This model is used by [Brighter Planet](http://brighterplanet.com)'s carbon emission [web service](http://carbon.brighterplanet.com) to estimate the **greenhouse gas emissions of server use**.
 #
