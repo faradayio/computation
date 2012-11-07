@@ -23,7 +23,7 @@ Feature: Computation Committee Calculations
   Scenario: Carrier instance class committee
     When the "carrier_instance_class" committee reports
     Then the committee should have used quorum "default"
-    And the conclusion of the committee should have "name" of "fallback"
+    And the conclusion of the committee should have "name" of "Amazon m1.small"
 
   Scenario: Electricity intensity committee from default
     When the "carrier_instance_class" committee reports
